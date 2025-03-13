@@ -1,0 +1,12 @@
+---
+title: "tea-teachers"
+---
+
+This is the Quarto website and project for an analysis looking into the salaries and cost of living for teachers across Texas. This project is in association with Texas Newsroom/KUT. The questions come from a proposed bill that would give more funding to teachers in specific-sized school districts (unclear exactly which ones). 
+
+This project was created by Karina Kumar on March 3rd, 2025 for the Media Innovation Group. 
+
+## Our questions: 
+- How are teachers doing now re: buying power compared to the last several years (using salary and cost of living)? 
+- And are rural teachers really doing worse?
+- Will the bill fix the problem it says it will?
