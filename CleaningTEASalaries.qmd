@@ -1,0 +1,133 @@
+---
+title: "Cleaning TEA Salaries"
+format: html
+---
+
+## Setup
+
+Importing the libraries we need.
+
+```{r}
+#| label: setup
+#| message: false
+
+library(tidyverse)
+library(janitor)
+```
+
+
+## Import all the salary files
+
+```{r}
+#| label: file-list
+
+salary_files_list <- list.files(
+  "data-raw",
+  pattern = ".csv",
+  full.names = T
+)
+
+salary_files_list
+
+```
+
+```{r}
+#| label: import
+
+import_files <- function(file_name) {
+  df <- file_name |> 
+    read_csv(     #read csv first and skip the TEA heading lines
+      skip = 5) |>
+    clean_names() |> 
+    mutate(fte_count = as.numeric(fte_count),
+           total_base_pay = as.numeric(total_base_pay),
+           average_base_pay = as.numeric(average_base_pay))
+}
+
+tea_salaries <- salary_files_list |> set_names(basename) |> 
+  map(import_files) |>  #map on our new function
+  list_rbind(names_to = "source")
+
+tea_salaries
+
+```
+
+```{r}
+tea_salaries <- tea_salaries |> filter(str_length(region) <= 2)
+
+tea_salaries |> tail(50)
+
+```
+
+
+```{r}
+tea_salaries |> group_by(district) |> 
+  summarize(total = n())
+
+```
+
+```{r}
+tea_salaries$staff_category |> unique()
+```
+
+```{r}
+tea_salaries |> filter(staff_category == "TRADITIONAL ISD/CSD")
+```
+
+```{r}
+tea_salaries |> filter(district == "176901")
+```
+
+```{r}
+teaching_staff_salaries <- tea_salaries |> filter(staff_category == "TEACHING STAFF") |> 
+  mutate(school_year = substr(source, start = (nchar(source) - 13 + 1), stop = nchar(source)-4))
+
+teaching_staff_salaries <- teaching_staff_salaries |> select(-source) |> 
+  mutate(
+    school_year = factor(school_year, 
+                         levels = c("2014-2015", "2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020", "2020-2021", "2021-2022", "2022-2023", "2023-2024")))
+
+teaching_staff_salaries
+```
+
+```{r}
+teaching_staff_totals <- teaching_staff_salaries |> filter(staff == "TOTAL TEACHING STAFF")
+
+teaching_staff_totals
+```
+
+```{r}
+teaching_staff_average_school_years <- teaching_staff_totals |>
+  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
+
+teaching_staff_average_school_years
+```
+
+```{r}
+austin_schools <- teaching_staff_totals |> filter(region == "13") |> 
+  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
+
+austin_schools
+```
+
+```{r}
+eanes <- austin_schools |> filter(district_name == "EANES ISD")
+```
+
+
+```{r}
+ggplot(eanes, aes(x = school_year, y = avg_pay, color = district_name, group = district_name)) +
+  geom_line() + 
+  theme(legend.position = "none") #+
+  #facet_wrap(~district_name)
+```
+
+
+
+
+
+
+
+
+
+
