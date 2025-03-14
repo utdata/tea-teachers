@@ -52,6 +52,8 @@ tea_salaries
 
 ```
 
+I know that the end of each file has weird extra lines with extra text. Let's remove all of those lines that don't have an actual region. Then we check that the files combined correctly by looking at the end of the datatset.
+
 ```{r}
 tea_salaries <- tea_salaries |> filter(str_length(region) <= 2)
 
@@ -59,6 +61,7 @@ tea_salaries |> tail(50)
 
 ```
 
+Another check that the files combined correctly. 
 
 ```{r}
 tea_salaries |> group_by(district) |> 
@@ -66,17 +69,27 @@ tea_salaries |> group_by(district) |>
 
 ```
 
+Another check that the files combined correctly. 
+
 ```{r}
 tea_salaries$staff_category |> unique()
 ```
+
+"TRADITIONAL ISD/CSD" shouldn't be in there. Let's see where that error is occurring. 
 
 ```{r}
 tea_salaries |> filter(staff_category == "TRADITIONAL ISD/CSD")
 ```
 
+It's only one row...and it looks like it might be missing data. Let's look at all the rows for this district. 
+
 ```{r}
 tea_salaries |> filter(district == "176901")
 ```
+
+These look normal...we only want staff_category that is "TEACHING STAFF" anyways so we can disregard that weird row since it has "ADMINISTRATIVE STAFF". 
+
+Now we want to pull the school year from the file name (source column). Then we will get rid of that source column cause we don't need it anymore and then I need ot factor the years so R understands that the strings have an order. 
 
 ```{r}
 teaching_staff_salaries <- tea_salaries |> filter(staff_category == "TEACHING STAFF") |> 
@@ -90,37 +103,18 @@ teaching_staff_salaries <- teaching_staff_salaries |> select(-source) |>
 teaching_staff_salaries
 ```
 
-```{r}
-teaching_staff_totals <- teaching_staff_salaries |> filter(staff == "TOTAL TEACHING STAFF")
+## Export
 
-teaching_staff_totals
-```
+I want to export the above dataframe to use for analysis in my next notebook.
 
 ```{r}
-teaching_staff_average_school_years <- teaching_staff_totals |>
-  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
-
-teaching_staff_average_school_years
-```
-
-```{r}
-austin_schools <- teaching_staff_totals |> filter(region == "13") |> 
-  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
-
-austin_schools
-```
-
-```{r}
-eanes <- austin_schools |> filter(district_name == "EANES ISD")
+teaching_staff_salaries |> write_rds("data-processed/teaching_staff_salaries.rds")
 ```
 
 
-```{r}
-ggplot(eanes, aes(x = school_year, y = avg_pay, color = district_name, group = district_name)) +
-  geom_line() + 
-  theme(legend.position = "none") #+
-  #facet_wrap(~district_name)
-```
+
+
+
 
 
 

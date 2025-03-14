@@ -1,0 +1,62 @@
+---
+title: "AnalysisTEASalaries"
+format: html
+---
+
+## Setup
+
+```{r}
+#| label: setup
+
+library(tidyverse)
+library(janitor)
+
+```
+
+## Read in cleaned data
+
+```{r}
+teaching_staff_salaries <- read_rds("data-processed/teaching_staff_salaries.rds")
+```
+
+
+
+Now I want to only look at totals for teaching staff at each district. 
+
+```{r}
+teaching_staff_totals <- teaching_staff_salaries |> filter(staff == "TOTAL TEACHING STAFF")
+
+teaching_staff_totals
+```
+
+Now let's make this graphable. 
+
+```{r}
+teaching_staff_average_school_years <- teaching_staff_totals |>
+  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
+
+teaching_staff_average_school_years
+```
+
+Okay there's too many schools for us to graph these all at once. Maybe if we just do one region (central texas, 13).
+
+```{r}
+austin_schools <- teaching_staff_totals |> filter(region == "13") |> 
+  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
+
+austin_schools
+```
+
+That's still too many to be understandable on a graph. Let's instead look at just one district. 
+
+```{r}
+eanes <- austin_schools |> filter(district_name == "EANES ISD")
+```
+
+
+```{r}
+ggplot(eanes, aes(x = school_year, y = avg_pay, color = district_name, group = district_name)) +
+  geom_line() + 
+  theme(legend.position = "none") #+
+  #facet_wrap(~district_name)    # we can use this is we are looking at multiple districts. 
+```
