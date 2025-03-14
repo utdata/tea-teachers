@@ -52,7 +52,7 @@ tea_salaries
 
 ```
 
-I know that the end of each file has weird extra lines with extra text. Let's remove all of those lines that don't have an actual region. Then we check that the files combined correctly by looking at the end of the datatset.
+I know that the end of each file has weird extra lines with extra text. Let's remove all of those lines that don't have an actual region. Then we check that the files combined correctly by looking at the end of the datatset
 
 ```{r}
 tea_salaries <- tea_salaries |> filter(str_length(region) <= 2)

@@ -50,13 +50,13 @@ austin_schools
 That's still too many to be understandable on a graph. Let's instead look at just one district. 
 
 ```{r}
-eanes <- austin_schools |> filter(district_name == "EANES ISD")
+austin <- austin_schools |> filter(district_name == "AUSTIN ISD")
 ```
 
 
 ```{r}
-ggplot(eanes, aes(x = school_year, y = avg_pay, color = district_name, group = district_name)) +
+ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name, group = district_name)) +
   geom_line() + 
   theme(legend.position = "none") #+
-  #facet_wrap(~district_name)    # we can use this is we are looking at multiple districts. 
+  #facet_wrap(~district_name)    # we can use this is we are looking at multiple districts
 ```
