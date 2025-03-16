@@ -17,6 +17,7 @@ library(janitor)
 
 ```{r}
 teaching_staff_salaries <- read_rds("data-processed/teaching_staff_salaries.rds")
+cpi <- read_rds("data-processed/cpi_201401_202502")
 ```
 
 
@@ -60,3 +61,9 @@ ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name, group = 
   theme(legend.position = "none") #+
   #facet_wrap(~district_name)    # we can use this is we are looking at multiple districts
 ```
+
+```{r}
+ggplot(cpi, aes(x = year_month, y = cpi)) +
+  geom_line()
+```
+
