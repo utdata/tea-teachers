@@ -34,7 +34,7 @@ Now let's make this graphable.
 
 ```{r}
 teaching_staff_average_school_years <- teaching_staff_totals |>
-  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
+  group_by(district_name.x, school_year) |> summarize(avg_pay = mean(average_base_pay))
 
 teaching_staff_average_school_years
 ```
@@ -43,7 +43,7 @@ Okay there's too many schools for us to graph these all at once. Maybe if we jus
 
 ```{r}
 austin_schools <- teaching_staff_totals |> filter(region == "13") |> 
-  group_by(district_name, school_year) |> summarize(avg_pay = mean(average_base_pay))
+  group_by(district_name.x, school_year) |> summarize(avg_pay = mean(average_base_pay))
 
 austin_schools
 ```
@@ -51,12 +51,12 @@ austin_schools
 That's still too many to be understandable on a graph. Let's instead look at just one district. 
 
 ```{r}
-austin <- austin_schools |> filter(district_name == "AUSTIN ISD")
+austin <- austin_schools |> filter(district_name.x == "AUSTIN ISD")
 ```
 
 
 ```{r}
-ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name, group = district_name)) +
+ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name.x, group = district_name.x)) +
   geom_line() + 
   theme(legend.position = "none") #+
   #facet_wrap(~district_name)    # we can use this is we are looking at multiple districts
@@ -65,5 +65,65 @@ ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name, group = 
 ```{r}
 ggplot(cpi, aes(x = year_month, y = cpi)) +
   geom_line()
+```
+
+## With District Types
+
+I want to see how many district types there are for TEA definition. 
+
+```{r}
+teaching_staff_totals |> group_by(tea_description) |> count()
+```
+
+I see that there is "N/A" and NA values. Let's combine those into one category. 
+
+```{r}
+teaching_staff_totals <- teaching_staff_totals |> mutate(
+  tea_description = tea_description |> na_if ("N/A")
+)
+```
+
+Now I want to see the average pay for each TEA district type for each school year. 
+
+```{r}
+district_types_tea_chart <- teaching_staff_totals |> group_by(tea_description, school_year) |> 
+  summarize(avg_pay = mean(average_base_pay))
+
+district_types_tea_chart
+```
+
+Now let's chart it. 
+
+```{r}
+ggplot(district_types_tea_chart, aes(x = school_year, y = avg_pay, color = tea_description, group = tea_description)) +
+  geom_point() +
+  geom_line() +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(nrow = 4, byrow = TRUE))
+```
+
+OKay I am going to repeat the same process I just did but for the NCES district type definitions. 
+
+```{r}
+teaching_staff_totals |> group_by(nces_description) |> count()
+```
+
+Finding average pay per school year for each NCES district type.
+
+```{r}
+district_types_nces_chart <- teaching_staff_totals |> group_by(nces_description, school_year) |> 
+  summarize(avg_pay = mean(average_base_pay))
+
+district_types_nces_chart
+```
+
+Graphing it. 
+
+```{r}
+ggplot(district_types_nces_chart, aes(x = school_year, y = avg_pay, color = nces_description, group = nces_description)) +
+  geom_point() +
+  geom_line() +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(nrow = 4, byrow = TRUE))
 ```
 

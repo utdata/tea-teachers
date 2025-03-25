@@ -13,6 +13,7 @@ Importing the libraries we need.
 
 library(tidyverse)
 library(janitor)
+library(readxl)
 ```
 
 
@@ -100,7 +101,29 @@ teaching_staff_salaries <- teaching_staff_salaries |> select(-source) |>
     school_year = factor(school_year, 
                          levels = c("2014-2015", "2015-2016", "2016-2017", "2017-2018", "2018-2019", "2019-2020", "2020-2021", "2021-2022", "2022-2023", "2023-2024")))
 
+colnames(teaching_staff_salaries)[colnames(teaching_staff_salaries) == "district"] <- "district_number"
+
 teaching_staff_salaries
+```
+
+## District Types and Join
+
+Let's read in the district types spreadsheet. We also want to clean the names and then change the first column to be district_name so it doesn't conflict when we join it later. 
+
+```{r}
+district_types <- read_xlsx("data-raw/district-type2223.xlsx", sheet = "2223_Data") |> clean_names()
+
+colnames(district_types)[colnames(district_types) == 'district'] <- 'district_name'
+
+district_types
+```
+
+Now I am going to join the district type data frame with the district salary data. 
+
+```{r}
+salaries_district_types <- teaching_staff_salaries |>  left_join(district_types, by = "district_number") |> select(-district_name.y)
+
+salaries_district_types 
 ```
 
 ## Export
@@ -108,7 +131,7 @@ teaching_staff_salaries
 I want to export the above dataframe to use for analysis in my next notebook.
 
 ```{r}
-teaching_staff_salaries |> write_rds("data-processed/teaching_staff_salaries.rds")
+salaries_district_types |> write_rds("data-processed/teaching_staff_salaries.rds")
 ```
 
 
