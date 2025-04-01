@@ -121,10 +121,20 @@ district_types
 Now I am going to join the district type data frame with the district salary data. 
 
 ```{r}
-salaries_district_types <- teaching_staff_salaries |>  left_join(district_types, by = "district_number") |> select(-district_name.y)
+salaries_district_types <- teaching_staff_salaries |>  left_join(district_types, by = "district_number") 
 
 salaries_district_types 
+
 ```
+
+```{r}
+salaries_district_types |> count(district_number, district_name.x, district_name.y) |> count(district_number, sort = T)
+```
+
+```{r}
+salaries_district_types |> filter(district_number == "227824") 
+```
+
 
 ## Export
 
