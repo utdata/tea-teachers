@@ -53,3 +53,25 @@ cpi_cleaned
 cpi_cleaned |> write_rds("data-processed/cpi_201401_202502")
 ```
 
+```{r}
+alice <- read_xlsx("data-raw/2024 ALICE - Texas Data Sheet.xlsx",
+                   sheet = "County 2010-2022") |> clean_names()
+
+alice 
+```
+
+```{r}
+household_budget <- alice |> select(
+  -geo_id2,
+  -geo_display_label,
+  -state_abbr,
+  -source_american_community_survey
+)
+
+household_budget
+```
+
+```{r}
+household_budget |> write_rds("data-processed/alice_household_budget.rds")
+```
+

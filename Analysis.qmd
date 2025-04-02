@@ -18,6 +18,7 @@ library(janitor)
 ```{r}
 teaching_staff_salaries <- read_rds("data-processed/teaching_staff_salaries.rds")
 cpi <- read_rds("data-processed/cpi_201401_202502")
+household_budget <- read_rds("data-processed/alice_household_budget.rds")
 ```
 
 
@@ -125,5 +126,12 @@ ggplot(district_types_nces_chart, aes(x = school_year, y = avg_pay, color = nces
   geom_line() +
   theme(legend.position = "bottom") +
   guides(color = guide_legend(nrow = 4, byrow = TRUE))
+```
+
+```{r}
+
+household_budget_simple <- household_budget |> select(year, county, alice_threshold_hh_under_65, alice_threshold_hh_65_years_and_over)
+
+household_budget_simple
 ```
 
