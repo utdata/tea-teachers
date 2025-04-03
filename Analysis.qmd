@@ -128,6 +128,12 @@ ggplot(district_types_nces_chart, aes(x = school_year, y = avg_pay, color = nces
   guides(color = guide_legend(nrow = 4, byrow = TRUE))
 ```
 
+## Adding Cost of Living
+
+Now that we have ALICE's household survival budget, I can use it to compare that to each districts salaries. 
+
+First, I am going to clean up the alice data so I can join it with my salary data.
+
 ```{r}
 
 household_budget_simple <- household_budget |> 
@@ -138,11 +144,15 @@ household_budget_simple <- household_budget |>
 household_budget_simple
 ```
 
+Now, I am going to left join it on both the county and year. 
+
 ```{r}
 salaries_col <- teaching_staff_totals |> left_join(household_budget_simple, by = c("county", "end_year"))
 
 salaries_col
 ```
+
+There are a few years that are inconsistent between the datasets. But since I have data around each year, I can use that. For example, I want to use 2016 for 2015 when needed. But, I also want to use 2022 for 2024 when needed. So I am going to fill up first, then down in each county. First, I tested it out with a single district. 
 
 ```{r}
 testing_filling <- salaries_col |> filter(county == "ANDERSON COUNTY") |> select(
@@ -153,6 +163,8 @@ testing_filling <- salaries_col |> filter(county == "ANDERSON COUNTY") |> select
 testing_filling
 ```
 
+Now, I'll do it for all of the data. 
+
 ```{r}
 salaries_col_fill <- salaries_col |> arrange(county, end_year) |> 
   group_by(county) |> 
@@ -160,6 +172,8 @@ salaries_col_fill <- salaries_col |> arrange(county, end_year) |>
 
 salaries_col_fill
 ```
+
+Now I want to see the difference between the ALICE budget and the average salary for each district. 
 
 ```{r}
 salary_col_comparison <- salaries_col_fill |> mutate(
