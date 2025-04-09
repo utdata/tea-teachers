@@ -1,0 +1,62 @@
+---
+title: "CleaningEnrollment"
+format: html
+---
+
+```{r}
+#| label: setup
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(janitor)
+```
+
+```{r}
+#| label: import
+
+enrollment_file_list <- list.files(
+  "data-raw/enrollment",
+  pattern = ".csv",
+  full.names = TRUE
+)
+
+enrollment_file_list
+```
+
+```{r}
+#| label: import-function
+
+importing_cleaning <- function(file_name) {
+  df <- file_name |>  
+    read_csv(     #read csv first and skip the TEA heading lines
+      skip = 4) |> 
+    clean_names() |>  # clean names to make the names uniform
+    mutate(enrollment = as.numeric(enrollment))  # change the column enrollment to a charcater for joining later
+}
+
+enrollment_all <- enrollment_file_list |> 
+  map(importing_cleaning) |>  #map on our new function
+  list_rbind()
+
+enrollment_all |> tail(500)
+
+```
+
+```{r}
+# district_name and district_number are somehow switching columns... 
+# the district name and district number columns are in different positions in some of the files...need help to fix
+
+enrollment_by_district <- enrollment_all |> group_by(district_name, year) |> 
+  summarize(total_enrollment = sum(enrollment, na.rm = T)) 
+
+enrollment_by_district 
+```
+
+```{r}
+enrollment_by_district |> write_rds("data-processed/enrollment-by-district.rds")
+```
+
+
+
+

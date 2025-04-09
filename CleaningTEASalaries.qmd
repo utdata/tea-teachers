@@ -135,6 +135,14 @@ salaries_district_types |> count(district_number, district_name.x, district_name
 salaries_district_types |> filter(district_number == "227824") 
 ```
 
+```{r}
+salaries_district_types <- salaries_district_types |> mutate(
+  end_year = substr(school_year, start = 6, stop = 9)
+)
+
+salaries_district_types
+```
+
 
 ## Export
 

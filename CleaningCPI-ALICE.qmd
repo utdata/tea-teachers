@@ -1,0 +1,77 @@
+---
+title: "CleaningCPI"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(readxl)
+```
+
+```{r}
+historical_cpi <- read_xlsx("data-raw/historical-cpi-u-202502.xlsx", 
+                            skip = 3, 
+                            col_names = TRUE,
+                            col_types = c("guess", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric", "numeric"))
+
+historical_cpi
+```
+
+```{r}
+historical_cpi_clean <- historical_cpi |> 
+  clean_names() |> 
+  select(-indent_level) |> 
+  drop_na(year)
+
+historical_cpi_clean
+```
+
+```{r}
+recent_cpi <- historical_cpi_clean |> filter(year > 2013)
+recent_cpi
+```
+
+```{r}
+recent_cpi_pivoted <- recent_cpi |> pivot_longer(!year, names_to = "month", values_to = "cpi")
+
+recent_cpi_pivoted
+```
+
+```{r}
+cpi_cleaned <- recent_cpi_pivoted |> mutate(
+  year_month = my(paste(month, year))
+) |> select(year_month,
+            cpi,
+            -year,
+            -month)
+
+cpi_cleaned
+```
+
+```{r}
+cpi_cleaned |> write_rds("data-processed/cpi_201401_202502")
+```
+
+```{r}
+alice <- read_xlsx("data-raw/2024 ALICE - Texas Data Sheet.xlsx",
+                   sheet = "County 2010-2022") |> clean_names()
+
+alice 
+```
+
+```{r}
+household_budget <- alice |> select(
+  -geo_id2,
+  -geo_display_label,
+  -state_abbr,
+  -source_american_community_survey
+)
+
+household_budget
+```
+
+```{r}
+household_budget |> write_rds("data-processed/alice_household_budget.rds")
+```
+
