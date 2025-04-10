@@ -44,8 +44,6 @@ enrollment_all |> tail(500)
 ```
 
 ```{r}
-# district_name and district_number are somehow switching columns... 
-# the district name and district number columns are in different positions in some of the files...need help to fix
 
 enrollment_by_district <- enrollment_all |> group_by(district_name, year) |> 
   summarize(total_enrollment = sum(enrollment, na.rm = T)) 

@@ -53,6 +53,15 @@ cpi_cleaned
 cpi_cleaned |> write_rds("data-processed/cpi_201401_202502")
 ```
 
+## CPI for Texas
+
+There is not data from the government on cost of living or consumer price index by county in Texas. But here's the statewide consumer price index.
+
+```{r}
+ggplot(cpi_cleaned, aes(x = year_month, y = cpi)) +
+  geom_line()
+```
+
 ```{r}
 alice <- read_xlsx("data-raw/2024 ALICE - Texas Data Sheet.xlsx",
                    sheet = "County 2010-2022") |> clean_names()
@@ -72,6 +81,17 @@ household_budget
 ```
 
 ```{r}
-household_budget |> write_rds("data-processed/alice_household_budget.rds")
+household_budget_simple <- household_budget |> 
+  mutate(county = paste(toupper(county), "COUNTY"),
+         end_year = as.character(year)) |> 
+  select(end_year, county, alice_threshold_hh_under_65)
+
+household_budget_simple
+
+```
+
+
+```{r}
+household_budget_simple |> write_rds("data-processed/alice_household_budget.rds")
 ```
 

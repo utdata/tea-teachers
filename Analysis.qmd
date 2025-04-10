@@ -19,7 +19,7 @@ library(scales)
 ```{r}
 teaching_staff_salaries <- read_rds("data-processed/teaching_staff_salaries.rds")
 cpi <- read_rds("data-processed/cpi_201401_202502")
-household_budget <- read_rds("data-processed/alice_household_budget.rds")
+household_budget_simple <- read_rds("data-processed/alice_household_budget.rds")
 enrollment <- read_rds("data-processed/enrollment-by-district.rds")
 ```
 
@@ -75,21 +75,13 @@ ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name.x, group 
   #facet_wrap(~district_name)    # we can use this if we are looking at multiple districts
 ```
 
-## CPI for Texas
-
-There is not data from the government on cost of living or consumer price index by county in Texas. But here's the statewide consumer price index.
-
-```{r}
-ggplot(cpi, aes(x = year_month, y = cpi)) +
-  geom_line()
-```
-
 ## With District Types
 
-I want to see how many district types there are for each TEA definition. 
+I want to see how many districts are in each category from TEA. 
 
 ```{r}
 teaching_staff_totals |> group_by(tea_description) |> count()
+# cumulation of years - need to look at one year at a time
 ```
 
 I see that there is "N/A" and NA values. Let's combine those into one category. 
@@ -125,21 +117,6 @@ ggplot(district_types_tea_chart, aes(x = school_year, y = avg_pay, color = tea_d
 Now that we have ALICE's household survival budget, I can use it to compare that to each districts salaries. 
 
 First, I am going to clean up the ALICE data so I can join it with my salary data.
-
-```{r}
-
-household_budget_simple <- household_budget |> 
-  mutate(county = paste(toupper(county), "COUNTY"),
-         end_year = as.character(year)) |> 
-  select(end_year, county, alice_threshold_hh_under_65)
-
-household_budget_simple
-
-
-salary_totals <- teaching_staff_totals |> mutate(
-  end_year 
-)
-```
 
 Now, I am going to left join it on both the county and year. 
 
@@ -205,6 +182,7 @@ salary_col_comparison |> group_by(tea_description) |>
   summarize(avg_difference = mean(difference),
             median_difference = median(difference),
             number_of_districts = n()) |> 
+            # fix number of districts, maybe
   arrange(avg_difference)
 ```
 
@@ -376,6 +354,8 @@ ggplot(above_below_alice_over_time_tea,
   scale_y_continuous(limits = c(0, 1))
 ```
 
+Graph of where each district type is
+
 Now for the bill categories.
 
 ```{r}
@@ -398,12 +378,33 @@ ggplot(above_below_alice_over_time_bill,
   scale_y_continuous(limits = c(0,1))
 ```
 
+## Average and median salary and alice threshold for each category
+
+```{r}
+bill_category_df |> group_by(tea_description) |> 
+  summarize(avg_salary = mean(average_base_pay),
+            median_salary = median(average_base_pay),
+            avg_threshold = mean(alice_threshold_hh_under_65),
+            median_threshold = median(alice_threshold_hh_under_65), 
+            total_districts = n())
+
+```
+
+```{r}
+bill_category_df |> group_by(bill_category) |> 
+  summarize(avg_salary = mean(average_base_pay),
+            median_salary = median(average_base_pay),
+            avg_threshold = mean(alice_threshold_hh_under_65),
+            median_threshold = median(alice_threshold_hh_under_65),
+            total_districts = n())
+
+```
+
+
 
 ## NCES District Types
 
 ### Count and Average Pay for NCES
-
-OKay I am going to repeat the same process I just did but for the NCES district type definitions. 
 
 ```{r}
 teaching_staff_totals |> group_by(nces_description) |> count()
