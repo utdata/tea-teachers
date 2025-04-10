@@ -350,11 +350,8 @@ Caused by warning:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># district_name and district_number are somehow switching columns... </span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># the district name and district number columns are in different positions in some of the files...need help to fix</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>enrollment_by_district <span class="ot">&lt;-</span> enrollment_all <span class="sc">|&gt;</span> <span class="fu">group_by</span>(district_name, year) <span class="sc">|&gt;</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_enrollment =</span> <span class="fu">sum</span>(enrollment, <span class="at">na.rm =</span> T)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>enrollment_by_district <span class="ot">&lt;-</span> enrollment_all <span class="sc">|&gt;</span> <span class="fu">group_by</span>(district_name, year) <span class="sc">|&gt;</span> </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_enrollment =</span> <span class="fu">sum</span>(enrollment, <span class="at">na.rm =</span> T)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'district_name'. You can override using the
 `.groups` argument.</code></pre>

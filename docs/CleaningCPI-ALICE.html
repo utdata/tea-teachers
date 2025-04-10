@@ -153,8 +153,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#cpi-for-texas" id="toc-cpi-for-texas" class="nav-link active" data-scroll-target="#cpi-for-texas">CPI for Texas</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -691,11 +697,28 @@ The following objects are masked from 'package:stats':
 <div class="cell">
 <div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a href="#cb140-1" aria-hidden="true" tabindex="-1"></a>cpi_cleaned <span class="sc">|&gt;</span> <span class="fu">write_rds</span>(<span class="st">"data-processed/cpi_201401_202502"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<section id="cpi-for-texas" class="level2">
+<h2 class="anchored" data-anchor-id="cpi-for-texas">CPI for Texas</h2>
+<p>There is not data from the government on cost of living or consumer price index by county in Texas. But here’s the statewide consumer price index.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a>alice <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"data-raw/2024 ALICE - Texas Data Sheet.xlsx"</span>,</span>
-<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sheet =</span> <span class="st">"County 2010-2022"</span>) <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span>
-<span id="cb141-3"><a href="#cb141-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb141-4"><a href="#cb141-4" aria-hidden="true" tabindex="-1"></a>alice </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb141"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb141-1"><a href="#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cpi_cleaned, <span class="fu">aes</span>(<span class="at">x =</span> year_month, <span class="at">y =</span> cpi)) <span class="sc">+</span></span>
+<span id="cb141-2"><a href="#cb141-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 10 rows containing missing values (`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="CleaningCPI-ALICE_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>alice <span class="ot">&lt;-</span> <span class="fu">read_xlsx</span>(<span class="st">"data-raw/2024 ALICE - Texas Data Sheet.xlsx"</span>,</span>
+<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sheet =</span> <span class="st">"County 2010-2022"</span>) <span class="sc">|&gt;</span> <span class="fu">clean_names</span>()</span>
+<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb143-4"><a href="#cb143-4" aria-hidden="true" tabindex="-1"></a>alice </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,032 × 13
    state  year geo_id2 geo_display_label      county   state_abbr households
@@ -718,14 +741,14 @@ The following objects are masked from 'package:stats':
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb143"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb143-1"><a href="#cb143-1" aria-hidden="true" tabindex="-1"></a>household_budget <span class="ot">&lt;-</span> alice <span class="sc">|&gt;</span> <span class="fu">select</span>(</span>
-<span id="cb143-2"><a href="#cb143-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>geo_id2,</span>
-<span id="cb143-3"><a href="#cb143-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>geo_display_label,</span>
-<span id="cb143-4"><a href="#cb143-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>state_abbr,</span>
-<span id="cb143-5"><a href="#cb143-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>source_american_community_survey</span>
-<span id="cb143-6"><a href="#cb143-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb143-7"><a href="#cb143-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb143-8"><a href="#cb143-8" aria-hidden="true" tabindex="-1"></a>household_budget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>household_budget <span class="ot">&lt;-</span> alice <span class="sc">|&gt;</span> <span class="fu">select</span>(</span>
+<span id="cb145-2"><a href="#cb145-2" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>geo_id2,</span>
+<span id="cb145-3"><a href="#cb145-3" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>geo_display_label,</span>
+<span id="cb145-4"><a href="#cb145-4" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>state_abbr,</span>
+<span id="cb145-5"><a href="#cb145-5" aria-hidden="true" tabindex="-1"></a>  <span class="sc">-</span>source_american_community_survey</span>
+<span id="cb145-6"><a href="#cb145-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb145-7"><a href="#cb145-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb145-8"><a href="#cb145-8" aria-hidden="true" tabindex="-1"></a>household_budget</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2,032 × 9
    state  year county   households poverty_households alice_households
@@ -747,10 +770,35 @@ The following objects are masked from 'package:stats':
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb145"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb145-1"><a href="#cb145-1" aria-hidden="true" tabindex="-1"></a>household_budget <span class="sc">|&gt;</span> <span class="fu">write_rds</span>(<span class="st">"data-processed/alice_household_budget.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb147"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb147-1"><a href="#cb147-1" aria-hidden="true" tabindex="-1"></a>household_budget_simple <span class="ot">&lt;-</span> household_budget <span class="sc">|&gt;</span> </span>
+<span id="cb147-2"><a href="#cb147-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">county =</span> <span class="fu">paste</span>(<span class="fu">toupper</span>(county), <span class="st">"COUNTY"</span>),</span>
+<span id="cb147-3"><a href="#cb147-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">end_year =</span> <span class="fu">as.character</span>(year)) <span class="sc">|&gt;</span> </span>
+<span id="cb147-4"><a href="#cb147-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(end_year, county, alice_threshold_hh_under_65)</span>
+<span id="cb147-5"><a href="#cb147-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb147-6"><a href="#cb147-6" aria-hidden="true" tabindex="-1"></a>household_budget_simple</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2,032 × 3
+   end_year county          alice_threshold_hh_under_65
+   &lt;chr&gt;    &lt;chr&gt;                                 &lt;dbl&gt;
+ 1 2010     ANDERSON COUNTY                      50000 
+ 2 2012     ANDERSON COUNTY                      50000 
+ 3 2014     ANDERSON COUNTY                      60000 
+ 4 2016     ANDERSON COUNTY                      50000 
+ 5 2018     ANDERSON COUNTY                      60000 
+ 6 2019     ANDERSON COUNTY                      60000 
+ 7 2021     ANDERSON COUNTY                      60000 
+ 8 2022     ANDERSON COUNTY                      66821.
+ 9 2010     ANDREWS COUNTY                       35000 
+10 2012     ANDREWS COUNTY                       40000 
+# ℹ 2,022 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb149"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb149-1"><a href="#cb149-1" aria-hidden="true" tabindex="-1"></a>household_budget_simple <span class="sc">|&gt;</span> <span class="fu">write_rds</span>(<span class="st">"data-processed/alice_household_budget.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
