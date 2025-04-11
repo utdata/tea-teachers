@@ -205,42 +205,55 @@ ggplot(avg_difference_over_time,
 ```
 
 
-## Region 13
+## Region 20 - San Antonio
 
-All of the above for region 13...
+All of the above for region 20...
 
 ```{r}
-region_13 <- salary_col_comparison |> filter(region == 13)
+region_20 <- salary_col_comparison |> filter(region == 20)
 
-region_13
+region_20
 ```
 
 
 ```{r}
-region_13 |> group_by(end_year) |> slice_min(difference, n = 10)
+region_20 |> group_by(end_year) |> slice_min(difference, n = 10)
 ```
 
 ```{r}
-region_13 |> group_by(end_year) |> slice_max(difference, n = 10)
+region_20 |> group_by(end_year) |> slice_max(difference, n = 10)
 ```
 
+Average and Median difference for all years together
+
 ```{r}
-region_13 |> group_by(tea_description) |> 
+region_20 |> group_by(tea_description) |> 
   summarize(avg_difference = mean(difference),
             median_difference = median(difference),
-            number_of_districts = n()) |> 
+            number_of_districts_since_2015 = n()) |> 
+  arrange(avg_difference)
+```
+
+average and median difference for 2024.
+
+```{r}
+region_20 |> filter(end_year == 2024) |> 
+  group_by(tea_description) |> 
+  summarize(avg_difference = mean(difference),
+            median_difference = median(difference),
+            number_of_districts_2024 = n()) |> 
   arrange(avg_difference)
 ```
 
 ```{r}
-avg_difference_over_time_13 <- region_13 |> group_by(tea_description, end_year) |> 
+avg_difference_over_time_20 <- region_20 |> group_by(tea_description, end_year) |> 
   summarize(avg_difference = mean(difference, na.rm = T))
 
-avg_difference_over_time_13
+avg_difference_over_time_20
 ```
 
 ```{r}
-ggplot(avg_difference_over_time_13, 
+ggplot(avg_difference_over_time_20, 
        aes(x = end_year, y = avg_difference, color = tea_description, group = tea_description)) + 
   geom_line() +
   scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
@@ -271,8 +284,17 @@ I am going to use the column bill_category to look at what the col vs salary loo
 bill_category_df |> group_by(bill_category) |> 
   summarize(avg_difference = mean(difference, na.rm = T),
             median_difference = median(difference, na.rm = T),
-            total_districts = n())
+            total_districts_since_2015 = n())
 
+```
+
+
+```{r}
+bill_category_df |> filter(end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_2024 = n())
 ```
 
 ```{r}
@@ -288,6 +310,43 @@ ggplot(avg_difference_bill_category,
   geom_line() +
   scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
 ```
+
+Same as above for region 20.
+
+
+```{r}
+bill_category_df |> filter(region == 20) |> 
+  group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_since_2015 = n())
+
+```
+
+```{r}
+bill_category_df |> filter(region == 20 & end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_2024 = n())
+```
+
+```{r}
+avg_difference_bill_category_20 <- bill_category_df |> 
+  filter(region == 20) |> 
+  group_by(bill_category,end_year) |> 
+  summarize(avg_difference = mean(difference, na.rm = T))
+
+avg_difference_bill_category_20
+```
+
+```{r}
+ggplot(avg_difference_bill_category_20, 
+       aes(x = end_year, y = avg_difference, color = bill_category, group = bill_category)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
+```
+
 
 ## Proportion of districts with salary above and below alice line
 
@@ -313,22 +372,48 @@ Now I am goint to count the number of districts below alice, count the total num
 ```{r}
 above_below_alice |> group_by(tea_description) |> 
   summarize(under_alice = sum(above_alice == FALSE),
-            total_districts = n()) |> 
-  mutate(prop_under_alice = (under_alice / total_districts) |> round_half_up(3)) |> 
+            total_districts_since_2015 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_since_2015) |> round_half_up(3)) |> 
   arrange(desc(prop_under_alice))
 
 ```
+
+Now I want this for 2024. 
+
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by(tea_description) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+  
+```
+
 
 Now here's the same thing but for the bill categories. 
 
 ```{r}
 above_below_alice |> group_by(bill_category) |> 
   summarize(under_alice = sum(above_alice == FALSE),
-            total_districts = n()) |> 
-  mutate(prop_under_alice = (under_alice / total_districts) |> round_half_up(3)) |> 
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
   arrange(desc(prop_under_alice))
 
 ```
+
+And again but for 2024.
+
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+  
+```
+
 
 ## Proportion above/below alice over time
 
@@ -378,25 +463,27 @@ ggplot(above_below_alice_over_time_bill,
   scale_y_continuous(limits = c(0,1))
 ```
 
-## Average and median salary and alice threshold for each category
+## Average and median salary and alice threshold for each category in 2024
 
 ```{r}
-bill_category_df |> group_by(tea_description) |> 
+bill_category_df |> filter(end_year == 2024) |> 
+  group_by(tea_description) |> 
   summarize(avg_salary = mean(average_base_pay),
             median_salary = median(average_base_pay),
             avg_threshold = mean(alice_threshold_hh_under_65),
             median_threshold = median(alice_threshold_hh_under_65), 
-            total_districts = n())
+            total_districts_2024 = n())
 
 ```
 
 ```{r}
-bill_category_df |> group_by(bill_category) |> 
+bill_category_df |> filter(end_year == 2024) |> 
+  group_by(bill_category) |> 
   summarize(avg_salary = mean(average_base_pay),
             median_salary = median(average_base_pay),
             avg_threshold = mean(alice_threshold_hh_under_65),
             median_threshold = median(alice_threshold_hh_under_65),
-            total_districts = n())
+            total_districts_2024 = n())
 
 ```
 
