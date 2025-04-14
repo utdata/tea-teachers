@@ -7,10 +7,13 @@ format: html
 
 ```{r}
 #| label: setup
+#| message: false
+#| warning: false
 
 library(tidyverse)
 library(janitor)
 library(scales)
+library(DT)
 
 ```
 
@@ -39,6 +42,11 @@ I want to add enrollment to this dataframe.
 teaching_staff_totals <- teaching_staff_totals_no_enroll |> 
    left_join(enrollment, by = c("district_name.x" = "district_name", "school_year" = "year"))
 
+# datatable(
+#   teaching_staff_totals,
+#   options = list(pageLength = 10, scrollX = TRUE),
+#   class = 'display'
+# )
 teaching_staff_totals |> tail()
 ```
 
@@ -542,10 +550,10 @@ ggplot(avg_difference_over_time_nces,
 
 
 
-### Same as above but for region 13 
+### Same as above but for region 20 
 
 ```{r}
-region_13 |> group_by(nces_description) |> 
+region_20 |> group_by(nces_description) |> 
   summarize(avg_difference = mean(difference),
             median_difference = median(difference),
             number_of_districts = n()) |> 
