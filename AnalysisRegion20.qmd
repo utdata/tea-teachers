@@ -1,0 +1,126 @@
+---
+title: "AnalysisRegion20"
+format: html
+---
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(scales)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+
+```
+
+```{r}
+salary_col_comparison <- read_rds("data-processed/salary_col_comparison.rds")
+bill_category_df <- read_rds("data-processed/bill_cateogry_df.rds")
+```
+
+
+
+## Region 20 - San Antonio
+
+All of the above for region 20...
+
+```{r}
+region_20 <- salary_col_comparison |> filter(region == 20)
+
+region_20
+```
+
+
+```{r}
+region_20 |> group_by(end_year) |> slice_min(difference, n = 10)
+```
+
+```{r}
+region_20 |> group_by(end_year) |> slice_max(difference, n = 10)
+```
+
+Average and Median difference for all years together
+
+```{r}
+region_20 |> group_by(tea_description) |> 
+  summarize(avg_difference = mean(difference),
+            median_difference = median(difference),
+            number_of_districts_since_2015 = n()) |> 
+  arrange(avg_difference)
+```
+
+average and median difference for 2024.
+
+```{r}
+region_20 |> filter(end_year == 2024) |> 
+  group_by(tea_description) |> 
+  summarize(avg_difference = mean(difference),
+            median_difference = median(difference),
+            number_of_districts_2024 = n()) |> 
+  arrange(avg_difference)
+```
+
+```{r}
+avg_difference_over_time_20 <- region_20 |> group_by(tea_description, end_year) |> 
+  summarize(avg_difference = mean(difference, na.rm = T))
+
+avg_difference_over_time_20
+```
+
+```{r}
+ggplot(avg_difference_over_time_20, 
+       aes(x = end_year, y = avg_difference, color = tea_description, group = tea_description)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
+```
+
+
+
+```{r}
+bill_category_df |> filter(region == 20) |> 
+  group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_since_2015 = n())
+
+```
+
+```{r}
+bill_category_df |> filter(region == 20 & end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_2024 = n())
+```
+
+```{r}
+avg_difference_bill_category_20 <- bill_category_df |> 
+  filter(region == 20) |> 
+  group_by(bill_category,end_year) |> 
+  summarize(avg_difference = mean(difference, na.rm = T))
+
+avg_difference_bill_category_20
+```
+
+```{r}
+ggplot(avg_difference_bill_category_20, 
+       aes(x = end_year, y = avg_difference, color = bill_category, group = bill_category)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
+```
+
+### Same as above but for region 20 
+
+```{r}
+region_20 |> group_by(nces_description) |> 
+  summarize(avg_difference = mean(difference),
+            median_difference = median(difference),
+            number_of_districts = n()) |> 
+  arrange(avg_difference)
+```

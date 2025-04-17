@@ -1,0 +1,411 @@
+---
+title: "AnalysisTEASalaries"
+format: html
+---
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(scales)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+
+```
+
+## Read in cleaned data
+
+```{r}
+teaching_staff_salaries <- read_rds("data-processed/teaching_staff_salaries.rds")
+cpi <- read_rds("data-processed/cpi_201401_202502")
+household_budget_simple <- read_rds("data-processed/alice_household_budget.rds")
+enrollment <- read_rds("data-processed/enrollment-by-district.rds")
+```
+
+
+Now I want to only look at totals for teaching staff at each district. I also want to exclude charters and exclude the weird small pay amounts. 
+
+```{r}
+teaching_staff_totals_no_enroll <- teaching_staff_salaries |> 
+  filter(staff == "TOTAL TEACHING STAFF" & average_base_pay > 10000 & charter_status == "TRADITIONAL ISD/CSD")
+
+teaching_staff_totals_no_enroll
+```
+
+I want to add enrollment to this dataframe. 
+
+```{r}
+teaching_staff_totals <- teaching_staff_totals_no_enroll |> 
+   left_join(enrollment, by = c("district_name.x" = "district_name", "school_year" = "year"))
+
+teaching_staff_totals |> tail()
+```
+
+Now let's look at the average pay per district per year so we can look at it over time.
+
+```{r}
+teaching_staff_average_school_years <- teaching_staff_totals |>
+  group_by(district_name.x, school_year) |> summarize(avg_pay = mean(average_base_pay))
+
+teaching_staff_average_school_years
+```
+
+Okay there's too many schools for us to graph these all at once. Maybe if we just do one region (central texas, 13).
+
+```{r}
+austin_schools <- teaching_staff_totals |> filter(region == "13") |> 
+  group_by(district_name.x, school_year) |> summarize(avg_pay = mean(average_base_pay)) 
+  
+
+austin_schools
+```
+
+That's still too many to be understandable on a graph. Let's instead look at just one district. 
+
+```{r}
+austin <- austin_schools |> filter(district_name.x == "AUSTIN ISD")
+```
+
+
+```{r}
+ggplot(austin, aes(x = school_year, y = avg_pay, color = district_name.x, group = district_name.x)) +
+  geom_line() + 
+  theme(legend.position = "none") #+
+  #facet_wrap(~district_name)    # we can use this if we are looking at multiple districts
+```
+
+```{r}
+write_rds(teaching_staff_totals, "data-processed/teaching_staff_totals.rds")
+```
+
+
+## With District Types
+
+I want to see how many districts are in each category from TEA in 2024.
+
+```{r}
+teaching_staff_totals |> group_by(tea_description) |> count(name = "total_districts")
+```
+
+
+```{r}
+teaching_staff_totals |> filter(school_year == "2023-2024") |> group_by(tea_description) |> count(name = "total_districts")
+```
+
+Now I want to see the average pay for each TEA district type for each school year. 
+
+```{r}
+district_types_tea_chart <- teaching_staff_totals |> group_by(tea_description, school_year) |> 
+  summarize(avg_pay = mean(average_base_pay))
+
+district_types_tea_chart
+```
+### Chart
+
+Now let's chart it. 
+
+```{r}
+ggplot(district_types_tea_chart, aes(x = school_year, y = avg_pay, color = tea_description, group = tea_description)) +
+  geom_point() +
+  geom_line() +
+  theme(legend.position = "bottom") +
+  guides(color = guide_legend(nrow = 4, byrow = TRUE))
+```
+
+
+## Adding Cost of Living
+
+Now that we have ALICE's household survival budget, I can use it to compare that to each districts salaries. 
+
+Now, I am going to left join it on both the county and year. 
+
+```{r}
+salaries_col <- left_join(teaching_staff_totals, household_budget_simple, by = c("county", "end_year"))
+
+salaries_col
+```
+
+There are a few years that are inconsistent between the datasets. But since I have data around each year, I can use that. For example, I want to use 2016 for 2015 when needed. But, I also want to use 2022 for 2024 when needed. So I am going to fill up first, then down in each county. 
+
+First, I am going to it out with a single district. 
+
+```{r}
+testing_filling <- salaries_col |> filter(county == "ANDERSON COUNTY") |> select(
+  county, district_name.x, district_number, school_year, end_year, alice_threshold_hh_under_65) |> 
+  fill(alice_threshold_hh_under_65, .direction = "updown")
+
+
+testing_filling
+```
+
+Actually, I want to fill down first then up, because I want to use the previous year when necessary instead of a future year and then for 2015 I will use 2016. 
+
+I'll do it for all of the data. 
+
+```{r}
+salaries_col_fill <- salaries_col |> arrange(county, end_year) |> 
+  group_by(county) |> 
+  fill(alice_threshold_hh_under_65, .direction = "downup")
+
+salaries_col_fill
+```
+
+Now I want to see the difference between the ALICE budget and the average salary for each district. 
+
+```{r}
+salary_col_comparison <- salaries_col_fill |> mutate(
+  difference = (average_base_pay - alice_threshold_hh_under_65) |> round_half_up()
+  ) |> select(
+  region, county, "district_name" = "district_name.x", district_number, total_enrollment, average_base_pay, school_year, end_year, tea_description, nces_description, alice_threshold_hh_under_65, difference
+)
+
+salary_col_comparison
+```
+
+```{r}
+write_rds(salary_col_comparison, "data-processed/salary_col_comparison.rds")
+```
+
+
+Let's look at the districts with the lowest values for difference in salary and ALICE, which means the most negative. I want to see the worst 10 for each year. 
+
+```{r}
+salary_col_comparison |> group_by(end_year) |> slice_min(difference, n = 10)
+```
+
+Now let's see the best 10 for each year (most positive).
+
+```{r}
+salary_col_comparison |> group_by(end_year) |> slice_max(difference, n = 10)
+```
+
+Now I want to see the average difference, median difference and count of districts for each TEA district type category. 
+
+```{r}
+salary_col_comparison |> group_by(tea_description) |> 
+  summarize(avg_difference = mean(difference),
+            median_difference = median(difference),
+            number_of_districts = n()) |> 
+            # fix number of districts, maybe
+  arrange(avg_difference)
+```
+
+Now I want to look at the average difference over time. 
+
+```{r}
+avg_difference_over_time <- salary_col_comparison |> group_by(tea_description, end_year) |> 
+  summarize(avg_difference = mean(difference))
+
+avg_difference_over_time
+```
+
+Let's graph it. 
+
+```{r}
+ggplot(avg_difference_over_time, 
+       aes(x = end_year, y = avg_difference, color = tea_description, group = tea_description)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
+```
+
+This graph shows the average difference between a district's salary and the ALICE cost of living threshold for each TEA district type over time.
+
+
+## Bill Categories
+
+I am going to create a bill category column that includes the different categories the SB and HB have defined as important to the bill. These numbers incluse 5000, 1600 and 300. 
+
+```{r}
+bill_category_df <-salary_col_comparison |> mutate(
+  bill_category = case_when(
+    total_enrollment >= 5000 ~ "over 5000",
+    total_enrollment < 300 ~ "under 300",
+    total_enrollment < 1600 ~ "under 1600",
+    total_enrollment < 5000 ~ "under 5000")
+) |> mutate(
+  bill_category = factor(bill_category, levels = c("under 300", "under 1600", "under 5000", "over 5000"))
+)
+
+bill_category_df
+
+```
+
+```{r}
+write_rds(bill_category_df, "data-processed/bill_cateogry_df.rds")
+```
+
+
+I am going to use the column bill_category to look at what the col vs salary looks like for the categories the bill wants to target. This is the same concept as above but for these bill categories instead of tea categories.
+
+```{r}
+bill_category_df |> group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_since_2015 = n())
+
+```
+
+
+```{r}
+bill_category_df |> filter(end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(avg_difference = mean(difference, na.rm = T),
+            median_difference = median(difference, na.rm = T),
+            total_districts_2024 = n())
+```
+
+```{r}
+avg_difference_bill_category <- bill_category_df |> group_by(bill_category, end_year) |> 
+  summarize(avg_difference = mean(difference, na.rm = T))
+
+avg_difference_bill_category
+```
+
+```{r}
+ggplot(avg_difference_bill_category, 
+       aes(x = end_year, y = avg_difference, color = bill_category, group = bill_category)) + 
+  geom_line() +
+  scale_y_continuous(limits = c(-10000,5000), n.breaks = 10)
+```
+
+
+## Proportion of districts with salary above and below alice line
+
+I want to know how many districts have salaries that meet the ALICE line or not. And find the proportion of of those districts for each TEA district type and based on the bill categories for districts. 
+
+First, I want to create a column that indicates if the salary is above or below ALICE.
+
+```{r}
+# in a district category whats the number of districts where the salary is below alice for that district dividied by the total number of districts in that category
+
+above_below_alice <- bill_category_df |> mutate(
+  above_alice = case_when(
+    average_base_pay >= alice_threshold_hh_under_65 ~ T,
+    TRUE ~ F
+  )
+)
+
+above_below_alice
+```
+
+Now I am goint to count the number of districts below alice, count the total number of districts in each tea district group and then calculate the proportion of districts that fall below the line. 
+
+```{r}
+above_below_alice |> group_by(tea_description) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_since_2015 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_since_2015) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+
+```
+
+Now I want this for 2024. 
+
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by(tea_description) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+  
+```
+
+
+Now here's the same thing but for the bill categories. 
+
+```{r}
+above_below_alice |> group_by(bill_category) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+
+```
+
+And again but for 2024.
+
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+  
+```
+
+```{r}
+write_rds(above_below_alice, "data-processed/above_below_alice.rds")
+```
+
+
+## Proportion above/below alice over time
+
+Now let's do the same thing as above but look at it over time so I can graph it. First for tea categories.
+
+```{r}
+above_below_alice_over_time_tea <- above_below_alice |> group_by(tea_description, end_year) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+
+above_below_alice_over_time_tea
+```
+
+```{r}
+ggplot(above_below_alice_over_time_tea, 
+       aes(x = end_year, 
+           y = prop_under_alice, 
+           color = tea_description, 
+           group = tea_description)) +
+  geom_line() +
+  scale_y_continuous(limits = c(0, 1))
+```
+
+Now for the bill categories.
+
+```{r}
+above_below_alice_over_time_bill <- above_below_alice |> group_by(bill_category, end_year) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+
+above_below_alice_over_time_bill
+```
+
+```{r}
+ggplot(above_below_alice_over_time_bill, 
+       aes(x = end_year, 
+           y = prop_under_alice, 
+           color = bill_category, 
+           group = bill_category)) +
+  geom_line() +
+  scale_y_continuous(limits = c(0,1))
+```
+
+
+Questions from Camille 4/16:
+Which districts by type have the biggest discrepancy between cost of living and their average salary 
+proportion of districts in each category that are above/below alice threshold
+How many districts of each type are under 5000 enrollment? What percentage of districts in each type are under 5000 enrollment?
+How many urban/suburban districts are under 5000 and how do they pay their teachers?
+This number of districts in texas pay their teachers under living wage (or percentage)
+What percentage of students are served by teachers that are underpaid?
+
+Spreadsheet from 2024: district type, district name, alice cost of living, avg_salary, difference, county, bill_category, enrollment 
+ALICE methodology
+
+
+
+
+
+

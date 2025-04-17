@@ -1,12 +1,15 @@
 project:
   type: website
   output-dir: docs
-
+  render: 
+    - "Cleaning*.qmd"
+    - "*.qmd"
+    - "!AnalysisMaps.qmd"
 
 website:
   title: "tea-teachers"
-  navbar:
-    left:
+  sidebar:
+    contents:
       - href: index.qmd
         text: Home
       - href: CleaningTEASalaries.qmd
@@ -15,15 +18,21 @@ website:
         text: "Cleaning TEA Enrollment"
       - href: CleaningCPI-ALICE.qmd
         text: "Cleaning CPI and ALICE"
-      - href: Analysis.qmd
-        text: Analysis
+      - href: AnalysisInitial.qmd
+        text: "Initial Analysis"
+      - href: AnalysisMaps.qmd
+        text: "Maps"
+      - href: AnalysisRegion20.qmd
+        text: "Region 20 Analysis"
+      - href: AnalysisNCES.qmd
+        text: "NCES District Type Analysis"
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
-    df-print: paged
+
     code-overflow: wrap
 
 
