@@ -4,7 +4,6 @@ project:
   render: 
     - "Cleaning*.qmd"
     - "*.qmd"
-    - "!AnalysisMaps.qmd"
 
 website:
   title: "tea-teachers"
@@ -20,12 +19,17 @@ website:
         text: "Cleaning CPI and ALICE"
       - href: AnalysisInitial.qmd
         text: "Initial Analysis"
-      - href: AnalysisMaps.qmd
-        text: "Maps"
+      - href: Map1.qmd
+        text: "TEA District Types Map"
+      - href: Map2.qmd
+        text: "Bill Categories Map"
+      - href: Map3.qmd
+        text: "Difference in Salary and Cost of Living Map"
       - href: AnalysisRegion20.qmd
         text: "Region 20 Analysis"
       - href: AnalysisNCES.qmd
         text: "NCES District Type Analysis"
+        
 
 format:
   html:

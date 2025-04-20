@@ -1,0 +1,76 @@
+---
+title: "Map3"
+format: html
+---
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(scales)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+
+```
+
+```{r}
+above_below_alice <- read_rds("data-processed/above_below_alice.rds")
+```
+
+```{r}
+school_districts <- st_read("data-raw/Current_Districts_2025/Current_Districts_2025.shp") 
+
+school_districts |> glimpse()
+```
+
+```{r}
+above_below_alice |> filter(district_number == "123913")
+
+simple_alice <- above_below_alice |> mutate(
+   tea_description = factor(tea_description, levels = c("Rural", "Non-metropolitan Stable", "Non-metropolitan Fast Growing", "Independent Town", "Other Central City Suburban", "Other Central City", "Major Suburban", "Major Urban"))
+ ) |> 
+  ungroup() |> 
+  filter(end_year == 2024) |> 
+  select(district_number, tea_description, nces_description, bill_category, difference) 
+
+simple_alice
+```
+
+Now I will join that simplified dataframe with the shape file information.
+
+```{r}
+joined_districts <- school_districts |> left_join(simple_alice, by = c("DISTRICT_C" = "district_number"))
+
+joined_districts |> glimpse()
+```
+
+Now I want to group the difference column into categories so we can see it better.
+
+```{r}
+difference_categories <- joined_districts |> mutate(
+  difference_category = case_when(
+    difference < -10000 ~ "less than -10,000",
+    difference <= -5000 ~ "-10,000 to -5,000",
+    difference <= 0 ~ "-5,000 to 0",
+    difference <= 5000 ~"0 to 5,000",
+    difference <= 10000 ~ "5,000 to 10,000",
+    difference > 10000 ~ "greater than 10,000"
+  )
+) |> mutate(
+  difference_category = difference_category |> factor(levels = c("less than -10,000","-10,000 to -5,000","-5,000 to 0","0 to 5,000","5,000 to 10,000","greater than 10,000"))
+)
+
+difference_categories |> glimpse()
+```
+
+Now, I can map the differences based on those categories. 
+
+```{r}
+mapview(difference_categories, zcol = "difference_category", col.regions=brewer.pal(6, "RdYlBu"))
+```

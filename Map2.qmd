@@ -1,0 +1,58 @@
+---
+title: "Map2"
+format: html
+---
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(scales)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+
+```
+
+```{r}
+above_below_alice <- read_rds("data-processed/above_below_alice.rds")
+```
+
+```{r}
+school_districts <- st_read("data-raw/Current_Districts_2025/Current_Districts_2025.shp") 
+
+school_districts |> glimpse()
+```
+
+```{r}
+above_below_alice |> filter(district_number == "123913")
+
+simple_alice <- above_below_alice |> mutate(
+   tea_description = factor(tea_description, levels = c("Rural", "Non-metropolitan Stable", "Non-metropolitan Fast Growing", "Independent Town", "Other Central City Suburban", "Other Central City", "Major Suburban", "Major Urban"))
+ ) |> 
+  ungroup() |> 
+  filter(end_year == 2024) |> 
+  select(district_number, tea_description, nces_description, bill_category, difference) 
+
+simple_alice
+```
+
+Now I will join that simplified dataframe with the shape file information.
+
+```{r}
+joined_districts <- school_districts |> left_join(simple_alice, by = c("DISTRICT_C" = "district_number"))
+
+joined_districts |> glimpse()
+```
+
+
+Now, the same for the bill categories.
+
+```{r}
+mapview(joined_districts, zcol = "bill_category")
+```
