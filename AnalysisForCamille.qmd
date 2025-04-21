@@ -1,0 +1,141 @@
+---
+title: "Analysis For Camille"
+format: html
+---
+
+Questions?
+- Which districts by type have the biggest discrepancy between cost of living and their average salary?
+- What proportion of districts in each category that are above/below alice threshold?
+- How many districts of each type are under 5000 enrollment? What percentage of districts in each type are under 5000 enrollment?
+- How many urban/suburban districts are under 5000 and how do they pay their teachers?
+- What number of districts in Texas pay their teachers under living wage (or percentage)?
+- What percentage of students are served by teachers that are underpaid?
+- Are there more districts being helped in the TEA "Rural" definition or the bill's enrollment breakdown?
+
+NOTE: I used 2024 data to answer these, but can easily look at it for another year or overtime. 
+
+## Setup
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(janitor)
+library(scales)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+
+```
+
+## Import
+
+```{r}
+above_below_alice <- read_rds("data-processed/above_below_alice.rds")
+
+above_below_alice |> head()
+```
+
+## Which district types have the biggest discrepancy between cost of living and average salary in 2024?
+
+By TEA district type
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by (tea_description) |> 
+  summarize( avg_difference = mean(difference),
+             total_districts_of_this_type = n(),
+             total_students_affected = sum(total_enrollment)) |> 
+  arrange(avg_difference)
+```
+Of the TEA district types, Non-metropolitan Fast Growing districts have the worst discrepancy between the average salary for a district and that district's county's ALICE cost of living. There are 34 districts and almost 62,000 students that fall into this category of Non-metropolitan fast-growing.
+
+By bill category (enrollment)
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by (bill_category) |> 
+  summarize( avg_difference = mean(difference),
+             total_districts_of_this_type = n(),
+             total_students_affected = sum(total_enrollment)) |> 
+  arrange(avg_difference)
+```
+Of the categories outlined by the bill (enrollment-based), districts that have under 1600 students (but more than 300) have the worst discrepancy between the average salary for a district and that district's county's ALICE cost of living. There are 425 districts and about 340,000 students that fall into this category of under 1600 enrollment. 
+
+## What proportion of districts in each category that are above/below alice threshold in 2024?
+
+First, based on the TEA categories.
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by(tea_description) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+```
+The above table shows the number of districts in each TEA district type category where the average salary does not meet the ALICE cost of living threshold (under_alice), the total number of districts in 2024 that fell into that district type category (total_districts_2024) and the proportion of districts in that district type category that where the average salary does not meet the ALICE cost of living threshold (prop_under_alice).
+
+
+Now, based on the bill categories (enrollment).
+```{r}
+above_below_alice |> filter(end_year == 2024) |> 
+  group_by(bill_category) |> 
+  summarize(under_alice = sum(above_alice == FALSE),
+            total_districts_2024 = n()) |> 
+  mutate(prop_under_alice = (under_alice / total_districts_2024) |> round_half_up(3)) |> 
+  arrange(desc(prop_under_alice))
+  
+```
+
+This table shows the number of districts in each bill-defined enrollment category where the average salary does not meet the ALICE cost of living threshold (under_alice), the total number of districts in 2024 that fell into that bill-defined enrollment category (total_districts_2024) and the proportion of districts in that category that where the average salary does not meet the ALICE cost of living threshold (prop_under_alice).
+
+## How many districts of each type are under 5000 enrollment and what proportion of districts in each type are under 5000 enrollment?
+
+This is based on the TEA district types. 
+```{r}
+above_below_alice |> filter(end_year == 2024 ) |> 
+  group_by(tea_description) |> 
+  summarize(districts_under_5000 = sum(total_enrollment < 5000),
+            total_districts = n()) |> 
+  mutate(
+    prop_districts_under_5000 = districts_under_5000 / total_districts
+  ) |> arrange(desc(prop_districts_under_5000))
+```
+In 2024, the "Rural" district type had the most districts with enrollment under 5000 at 461. 
+
+## How many urban/suburban districts are under 5000 and how do they pay their teachers?
+
+Based on the table from the last question, there were 0 districts in 2024 that were considered Major Urban and had enrollment under 5000. There were 7 districts in 2025 that were considered Major Suburban and had enrollment under 5000. Let's look at those 7. 
+
+```{r}
+above_below_alice |> filter(tea_description == "Major Suburban" & end_year == 2024 & total_enrollment < 5000)
+```
+Of these 7 districts, 3 had an average salary that did not meet the ALICE cost of living threshold.
+
+## What number of districts in Texas pay their teachers under living wage? What's that in a percentage?
+
+
+```{r}
+above_below_alice |> filter(end_year == 2024 & above_alice == F) |> ungroup() |> 
+  summarize(total_districts_in_Texas_under_alice_threshold = n())
+```
+In 2024, 463 districts in Texas on average paid their teachers under a living wage.
+
+Now, the percentage.
+```{r}
+above_below_alice |> filter(end_year == 2024) |> ungroup() |> 
+  summarise(percent_districts_under_alice_threshold = ((sum(above_alice == F) / n())*100) |> round_half_up(2))
+```
+In 2024, 45.39% of districts in Texas on average paid their teachers under a living wage.
+
+## What percentage of students are served by teachers that are underpaid?
+
+```{r}
+above_below_alice |> filter(end_year == 2024 ) |> ungroup() |> 
+  summarise(total_students = sum(total_enrollment),
+            total_students_served_by_underpaid_teachers = sum(total_enrollment[above_alice == F])
+  ) |> mutate(
+    percent_students_served_by_underpaid_teachers = (total_students_served_by_underpaid_teachers / total_students * 100) |> round_half_up(2)
+  ) |> select(percent_students_served_by_underpaid_teachers)
+```
+In 2024, 31.15% of students were served by teachers who were on average paid under a living wage. 
