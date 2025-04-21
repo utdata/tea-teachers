@@ -62,7 +62,7 @@ above_below_alice |> filter(end_year == 2024) |>
 ```
 Of the categories outlined by the bill (enrollment-based), districts that have under 1600 students (but more than 300) have the worst discrepancy between the average salary for a district and that district's county's ALICE cost of living. There are 425 districts and about 340,000 students that fall into this category of under 1600 enrollment. 
 
-## What proportion of districts in each category that are above/below alice threshold in 2024?
+## What proportion of districts in each category are above/below alice threshold in 2024?
 
 First, based on the TEA categories.
 ```{r}
@@ -98,17 +98,17 @@ above_below_alice |> filter(end_year == 2024 ) |>
   summarize(districts_under_5000 = sum(total_enrollment < 5000),
             total_districts = n()) |> 
   mutate(
-    prop_districts_under_5000 = districts_under_5000 / total_districts
+    prop_districts_under_5000 = (districts_under_5000 / total_districts) |> round_half_up(3)
   ) |> arrange(desc(prop_districts_under_5000))
 ```
 In 2024, the "Rural" district type had the most districts with enrollment under 5000 at 461. 
 
-## How many urban/suburban districts are under 5000 and how do they pay their teachers?
+## How many major urban/suburban districts are under 5000 and how do they pay their teachers?
 
 Based on the table from the last question, there were 0 districts in 2024 that were considered Major Urban and had enrollment under 5000. There were 7 districts in 2025 that were considered Major Suburban and had enrollment under 5000. Let's look at those 7. 
 
 ```{r}
-above_below_alice |> filter(tea_description == "Major Suburban" & end_year == 2024 & total_enrollment < 5000)
+above_below_alice |> filter(tea_description == "Major Suburban" & end_year == 2024 & total_enrollment < 5000) # add select to simplify
 ```
 Of these 7 districts, 3 had an average salary that did not meet the ALICE cost of living threshold.
 
@@ -116,26 +116,46 @@ Of these 7 districts, 3 had an average salary that did not meet the ALICE cost o
 
 
 ```{r}
-above_below_alice |> filter(end_year == 2024 & above_alice == F) |> ungroup() |> 
+above_below_alice |> ungroup() |> filter(end_year == 2024 & above_alice == F) |> 
   summarize(total_districts_in_Texas_under_alice_threshold = n())
 ```
 In 2024, 463 districts in Texas on average paid their teachers under a living wage.
 
 Now, the percentage.
 ```{r}
-above_below_alice |> filter(end_year == 2024) |> ungroup() |> 
-  summarise(percent_districts_under_alice_threshold = ((sum(above_alice == F) / n())*100) |> round_half_up(2))
+above_below_alice |> ungroup() |>  filter(end_year == 2024) |> 
+  summarise( under_alice = sum(above_alice == F),
+             total_districts = n()) |> 
+  mutate(percent_districts_under_alice_threshold = ((under_alice / total_districts)*100) |> round_half_up(1))
 ```
-In 2024, 45.39% of districts in Texas on average paid their teachers under a living wage.
+In 2024, 45.4% of districts in Texas on average paid their teachers under a living wage.
 
 ## What percentage of students are served by teachers that are underpaid?
 
 ```{r}
 above_below_alice |> filter(end_year == 2024 ) |> ungroup() |> 
-  summarise(total_students = sum(total_enrollment),
-            total_students_served_by_underpaid_teachers = sum(total_enrollment[above_alice == F])
+  summarise(total_students_served_by_underpaid_teachers = sum(total_enrollment[above_alice == F]),
+    total_students = sum(total_enrollment)
   ) |> mutate(
     percent_students_served_by_underpaid_teachers = (total_students_served_by_underpaid_teachers / total_students * 100) |> round_half_up(2)
-  ) |> select(percent_students_served_by_underpaid_teachers)
+  ) #|> select(percent_students_served_by_underpaid_teachers)
 ```
 In 2024, 31.15% of students were served by teachers who were on average paid under a living wage. 
+
+## Are there more districts being helped in the TEA "Rural" definition or the bill's enrollment breakdown?
+
+Districts being helped by TEA "Rural" description
+```{r}
+above_below_alice |> filter(end_year == 2024 & tea_description == "Rural") |> ungroup() |> 
+  count(name = "total_districts_TEA_rural")
+```
+464 districts would get money if the bill targeted TEA's "Rural" districts based on 2022-2023 TEA district types. 
+
+Distircts being helped based on bill categories of enrollment.
+```{r}
+above_below_alice |> filter(end_year == 2024 & (bill_category == "under 300" | bill_category == "under 1600" | bill_category == "under 5000")) |> 
+  group_by(bill_category) |> 
+  count(name = "total_districts") |> adorn_totals()
+```
+827 total districts would get money with the bill targeting districts under 5000, under 1600 and under 300 enrollment based on 2023-2024 enrollment. 
+

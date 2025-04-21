@@ -29,6 +29,7 @@ website:
         text: "Region 20 Analysis"
       - href: AnalysisNCES.qmd
         text: "NCES District Type Analysis"
+      - href: AnalysisForCamille.qmd
         
 
 format:
