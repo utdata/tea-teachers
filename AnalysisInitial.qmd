@@ -157,6 +157,7 @@ salaries_col_fill <- salaries_col |> arrange(county, end_year) |>
 salaries_col_fill
 ```
 
+
 Now I want to see the difference between the ALICE budget and the average salary for each district. 
 
 ```{r}

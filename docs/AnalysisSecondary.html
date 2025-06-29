@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Secondary Analysis – tea-teachers</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-dcc7d9e706e4adfbab8e3d6c7c60bab2.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AnalysisSecondary.html">Secondary Analysis</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">tea-teachers</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./CleaningTEASalaries.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cleaning TEA Salaries</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./CleaningEnrollment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cleaning TEA Enrollment</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./CleaningCPI-ALICE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Cleaning CPI and ALICE</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AnalysisInitial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Initial Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AnalysisNCES.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">NCES District Type Analysis</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AnalysisSecondary.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Secondary Analysis</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#which-district-types-have-the-biggest-discrepancy-between-cost-of-living-and-average-salary-in-2024" id="toc-which-district-types-have-the-biggest-discrepancy-between-cost-of-living-and-average-salary-in-2024" class="nav-link active" data-scroll-target="#which-district-types-have-the-biggest-discrepancy-between-cost-of-living-and-average-salary-in-2024">Which district types have the biggest discrepancy between cost of living and average salary in 2024?</a>
+  <ul class="collapse">
+  <li><a href="#by-tea-district-type" id="toc-by-tea-district-type" class="nav-link" data-scroll-target="#by-tea-district-type">By TEA district type</a></li>
+  <li><a href="#by-bill-category-enrollment" id="toc-by-bill-category-enrollment" class="nav-link" data-scroll-target="#by-bill-category-enrollment">By bill category (enrollment)</a></li>
+  </ul></li>
+  <li><a href="#what-proportion-of-districts-in-each-category-are-abovebelow-alice-threshold-in-2024" id="toc-what-proportion-of-districts-in-each-category-are-abovebelow-alice-threshold-in-2024" class="nav-link" data-scroll-target="#what-proportion-of-districts-in-each-category-are-abovebelow-alice-threshold-in-2024">What proportion of districts in each category are above/below alice threshold in 2024?</a>
+  <ul class="collapse">
+  <li><a href="#based-on-the-tea-categories" id="toc-based-on-the-tea-categories" class="nav-link" data-scroll-target="#based-on-the-tea-categories">Based on the TEA categories</a></li>
+  <li><a href="#based-on-the-bill-categories-enrollment" id="toc-based-on-the-bill-categories-enrollment" class="nav-link" data-scroll-target="#based-on-the-bill-categories-enrollment">Based on the bill categories (enrollment)</a></li>
+  </ul></li>
+  <li><a href="#how-many-districts-of-each-type-are-under-5000-enrollment-and-what-proportion-of-districts-in-each-type-are-under-5000-enrollment" id="toc-how-many-districts-of-each-type-are-under-5000-enrollment-and-what-proportion-of-districts-in-each-type-are-under-5000-enrollment" class="nav-link" data-scroll-target="#how-many-districts-of-each-type-are-under-5000-enrollment-and-what-proportion-of-districts-in-each-type-are-under-5000-enrollment">How many districts of each type are under 5000 enrollment and what proportion of districts in each type are under 5000 enrollment?</a></li>
+  <li><a href="#how-many-major-urbansuburban-districts-are-under-5000-and-how-do-they-pay-their-teachers" id="toc-how-many-major-urbansuburban-districts-are-under-5000-and-how-do-they-pay-their-teachers" class="nav-link" data-scroll-target="#how-many-major-urbansuburban-districts-are-under-5000-and-how-do-they-pay-their-teachers">How many major urban/suburban districts are under 5000 and how do they pay their teachers?</a></li>
+  <li><a href="#what-number-of-districts-in-texas-pay-their-teachers-under-living-wage-whats-that-in-a-percentage" id="toc-what-number-of-districts-in-texas-pay-their-teachers-under-living-wage-whats-that-in-a-percentage" class="nav-link" data-scroll-target="#what-number-of-districts-in-texas-pay-their-teachers-under-living-wage-whats-that-in-a-percentage">What number of districts in Texas pay their teachers under living wage? What’s that in a percentage?</a></li>
+  <li><a href="#what-percentage-of-students-are-served-by-teachers-that-are-underpaid" id="toc-what-percentage-of-students-are-served-by-teachers-that-are-underpaid" class="nav-link" data-scroll-target="#what-percentage-of-students-are-served-by-teachers-that-are-underpaid">What percentage of students are served by teachers that are underpaid?</a></li>
+  <li><a href="#are-there-more-districts-being-helped-in-the-tea-rural-definition-or-the-bills-enrollment-breakdown" id="toc-are-there-more-districts-being-helped-in-the-tea-rural-definition-or-the-bills-enrollment-breakdown" class="nav-link" data-scroll-target="#are-there-more-districts-being-helped-in-the-tea-rural-definition-or-the-bills-enrollment-breakdown">Are there more districts being helped in the TEA “Rural” definition or the bill’s enrollment breakdown?</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Secondary Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Questions to answer:</p>
+<ul>
+<li>Which districts by type have the biggest discrepancy between cost of living and their average salary?</li>
+<li>What proportion of districts in each category that are above/below alice threshold?</li>
+<li>How many districts of each type are under 5000 enrollment? What percentage of districts in each type are under 5000 enrollment?</li>
+<li>How many urban/suburban districts are under 5000 and how do they pay their teachers?</li>
+<li>What number of districts in Texas pay their teachers under living wage (or percentage)?</li>
+<li>What percentage of students are served by teachers that are underpaid?</li>
+<li>Are there more districts being helped in the TEA “Rural” definition or the bill’s enrollment breakdown?</li>
+</ul>
+<p>NOTE: I used 2024 data to answer these, but can easily look at it for another year or overtime.</p>
+<p>Here’s a sample of the data.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["county"],"name":[2],"type":["chr"],"align":["left"]},{"label":["district_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["district_number"],"name":[4],"type":["chr"],"align":["left"]},{"label":["total_enrollment"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["average_base_pay"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["school_year"],"name":[7],"type":["chr"],"align":["left"]},{"label":["end_year"],"name":[8],"type":["chr"],"align":["left"]},{"label":["tea_description"],"name":[9],"type":["chr"],"align":["left"]},{"label":["nces_description"],"name":[10],"type":["chr"],"align":["left"]},{"label":["alice_threshold_hh_under_65"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["difference"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["bill_category"],"name":[13],"type":["fct"],"align":["left"]},{"label":["above_alice"],"name":[14],"type":["lgl"],"align":["right"]}],"data":[{"1":"07","2":"ANDERSON COUNTY","3":"CAYUGA ISD","4":"001902","5":"577","6":"44925","7":"2014-2015","8":"2015","9":"Rural","10":"Rural-Remote","11":"50000","12":"-5075","13":"under 1600","14":"FALSE"},{"1":"07","2":"ANDERSON COUNTY","3":"ELKHART ISD","4":"001903","5":"1217","6":"41985","7":"2014-2015","8":"2015","9":"Non-metropolitan Stable","10":"Rural-Distant","11":"50000","12":"-8015","13":"under 1600","14":"FALSE"},{"1":"07","2":"ANDERSON COUNTY","3":"FRANKSTON ISD","4":"001904","5":"803","6":"41609","7":"2014-2015","8":"2015","9":"Rural","10":"Rural-Distant","11":"50000","12":"-8391","13":"under 1600","14":"FALSE"},{"1":"07","2":"ANDERSON COUNTY","3":"NECHES ISD","4":"001906","5":"370","6":"42884","7":"2014-2015","8":"2015","9":"Rural","10":"Rural-Distant","11":"50000","12":"-7116","13":"under 1600","14":"FALSE"},{"1":"07","2":"ANDERSON COUNTY","3":"PALESTINE ISD","4":"001907","5":"3353","6":"43642","7":"2014-2015","8":"2015","9":"Independent Town","10":"Town-Distant","11":"50000","12":"-6358","13":"under 5000","14":"FALSE"},{"1":"07","2":"ANDERSON COUNTY","3":"WESTWOOD ISD","4":"001908","5":"1596","6":"42097","7":"2014-2015","8":"2015","9":"Non-metropolitan Stable","10":"Town-Distant","11":"50000","12":"-7903","13":"under 1600","14":"FALSE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<section id="which-district-types-have-the-biggest-discrepancy-between-cost-of-living-and-average-salary-in-2024" class="level2">
+<h2 class="anchored" data-anchor-id="which-district-types-have-the-biggest-discrepancy-between-cost-of-living-and-average-salary-in-2024">Which district types have the biggest discrepancy between cost of living and average salary in 2024?</h2>
+<section id="by-tea-district-type" class="level3">
+<h3 class="anchored" data-anchor-id="by-tea-district-type">By TEA district type</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span> (tea_description) <span class="sc">|&gt;</span> </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>( <span class="at">avg_difference =</span> <span class="fu">mean</span>(difference),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">total_districts_of_this_type =</span> <span class="fu">n</span>(),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">total_students_affected =</span> <span class="fu">sum</span>(total_enrollment)) <span class="sc">|&gt;</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(avg_difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["tea_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["avg_difference"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["total_districts_of_this_type"],"name":[3],"type":["int"],"align":["right"]},{"label":["total_students_affected"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Non-metropolitan Fast Growing","2":"-3940.0294","3":"34","4":"61765"},{"1":"Other Central City Suburban","2":"-443.6228","3":"167","4":"997318"},{"1":"Rural","2":"264.8750","3":"464","4":"302787"},{"1":"Non-metropolitan Stable","2":"456.5635","3":"181","4":"336239"},{"1":"Major Suburban","2":"890.5067","3":"75","4":"1664711"},{"1":"Independent Town","2":"1047.3396","3":"53","4":"209998"},{"1":"Other Central City","2":"1523.9714","3":"35","4":"841189"},{"1":"Major Urban","2":"3887.9091","3":"11","4":"856729"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Of the TEA district types, Non-metropolitan Fast Growing districts have the worst discrepancy between the average salary for a district and that district’s county’s ALICE cost of living. There are 34 districts and almost 62,000 students that fall into this category of Non-metropolitan fast-growing.</p>
+</section>
+<section id="by-bill-category-enrollment" class="level3">
+<h3 class="anchored" data-anchor-id="by-bill-category-enrollment">By bill category (enrollment)</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span> (bill_category) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>( <span class="at">avg_difference =</span> <span class="fu">mean</span>(difference),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">total_districts_of_this_type =</span> <span class="fu">n</span>(),</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">total_students_affected =</span> <span class="fu">sum</span>(total_enrollment)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(avg_difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["bill_category"],"name":[1],"type":["fct"],"align":["left"]},{"label":["avg_difference"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["total_districts_of_this_type"],"name":[3],"type":["int"],"align":["right"]},{"label":["total_students_affected"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"under 1600","2":"-398.78118","3":"425","4":"340195"},{"1":"under 5000","2":"85.27041","3":"196","4":"562500"},{"1":"under 300","2":"648.73301","3":"206","4":"37337"},{"1":"over 5000","2":"1217.75648","3":"193","4":"4330704"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Of the categories outlined by the bill (enrollment-based), districts that have under 1600 students (but more than 300) have the worst discrepancy between the average salary for a district and that district’s county’s ALICE cost of living. There are 425 districts and about 340,000 students that fall into this category of under 1600 enrollment.</p>
+</section>
+</section>
+<section id="what-proportion-of-districts-in-each-category-are-abovebelow-alice-threshold-in-2024" class="level2">
+<h2 class="anchored" data-anchor-id="what-proportion-of-districts-in-each-category-are-abovebelow-alice-threshold-in-2024">What proportion of districts in each category are above/below alice threshold in 2024?</h2>
+<section id="based-on-the-tea-categories" class="level3">
+<h3 class="anchored" data-anchor-id="based-on-the-tea-categories">Based on the TEA categories</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tea_description) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">under_alice =</span> <span class="fu">sum</span>(above_alice <span class="sc">==</span> <span class="cn">FALSE</span>),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">total_districts_2024 =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop_under_alice =</span> (under_alice <span class="sc">/</span> total_districts_2024) <span class="sc">|&gt;</span> <span class="fu">round_half_up</span>(<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(prop_under_alice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["tea_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["under_alice"],"name":[2],"type":["int"],"align":["right"]},{"label":["total_districts_2024"],"name":[3],"type":["int"],"align":["right"]},{"label":["prop_under_alice"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Non-metropolitan Fast Growing","2":"25","3":"34","4":"0.735"},{"1":"Other Central City Suburban","2":"84","3":"167","4":"0.503"},{"1":"Rural","2":"220","3":"464","4":"0.474"},{"1":"Independent Town","2":"22","3":"53","4":"0.415"},{"1":"Non-metropolitan Stable","2":"75","3":"181","4":"0.414"},{"1":"Other Central City","2":"13","3":"35","4":"0.371"},{"1":"Major Suburban","2":"22","3":"75","4":"0.293"},{"1":"Major Urban","2":"2","3":"11","4":"0.182"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>The above table shows the number of districts in each TEA district type category where the average salary does not meet the ALICE cost of living threshold (under_alice), the total number of districts in 2024 that fell into that district type category (total_districts_2024) and the proportion of districts in that district type category that where the average salary does not meet the ALICE cost of living threshold (prop_under_alice).</p>
+</section>
+<section id="based-on-the-bill-categories-enrollment" class="level3">
+<h3 class="anchored" data-anchor-id="based-on-the-bill-categories-enrollment">Based on the bill categories (enrollment)</h3>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bill_category) <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">under_alice =</span> <span class="fu">sum</span>(above_alice <span class="sc">==</span> <span class="cn">FALSE</span>),</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">total_districts_2024 =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prop_under_alice =</span> (under_alice <span class="sc">/</span> total_districts_2024) <span class="sc">|&gt;</span> <span class="fu">round_half_up</span>(<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(prop_under_alice))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["bill_category"],"name":[1],"type":["fct"],"align":["left"]},{"label":["under_alice"],"name":[2],"type":["int"],"align":["right"]},{"label":["total_districts_2024"],"name":[3],"type":["int"],"align":["right"]},{"label":["prop_under_alice"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"under 1600","2":"208","3":"425","4":"0.489"},{"1":"under 300","2":"97","3":"206","4":"0.471"},{"1":"under 5000","2":"92","3":"196","4":"0.469"},{"1":"over 5000","2":"66","3":"193","4":"0.342"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>This table shows the number of districts in each bill-defined enrollment category where the average salary does not meet the ALICE cost of living threshold (under_alice), the total number of districts in 2024 that fell into that bill-defined enrollment category (total_districts_2024) and the proportion of districts in that category that where the average salary does not meet the ALICE cost of living threshold (prop_under_alice).</p>
+</section>
+</section>
+<section id="how-many-districts-of-each-type-are-under-5000-enrollment-and-what-proportion-of-districts-in-each-type-are-under-5000-enrollment" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-districts-of-each-type-are-under-5000-enrollment-and-what-proportion-of-districts-in-each-type-are-under-5000-enrollment">How many districts of each type are under 5000 enrollment and what proportion of districts in each type are under 5000 enrollment?</h2>
+<p>This is based on the TEA district types.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span> ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(tea_description) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">districts_under_5000 =</span> <span class="fu">sum</span>(total_enrollment <span class="sc">&lt;</span> <span class="dv">5000</span>),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">total_districts =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">prop_districts_under_5000 =</span> (districts_under_5000 <span class="sc">/</span> total_districts) <span class="sc">|&gt;</span> <span class="fu">round_half_up</span>(<span class="dv">3</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(prop_districts_under_5000))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["tea_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["districts_under_5000"],"name":[2],"type":["int"],"align":["right"]},{"label":["total_districts"],"name":[3],"type":["int"],"align":["right"]},{"label":["prop_districts_under_5000"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Rural","2":"461","3":"464","4":"0.994"},{"1":"Non-metropolitan Stable","2":"178","3":"181","4":"0.983"},{"1":"Non-metropolitan Fast Growing","2":"30","3":"34","4":"0.882"},{"1":"Independent Town","2":"44","3":"53","4":"0.830"},{"1":"Other Central City Suburban","2":"107","3":"167","4":"0.641"},{"1":"Major Suburban","2":"7","3":"75","4":"0.093"},{"1":"Major Urban","2":"0","3":"11","4":"0.000"},{"1":"Other Central City","2":"0","3":"35","4":"0.000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>In 2024, the “Rural” district type had the most districts with enrollment under 5000 at 461.</p>
+</section>
+<section id="how-many-major-urbansuburban-districts-are-under-5000-and-how-do-they-pay-their-teachers" class="level2">
+<h2 class="anchored" data-anchor-id="how-many-major-urbansuburban-districts-are-under-5000-and-how-do-they-pay-their-teachers">How many major urban/suburban districts are under 5000 and how do they pay their teachers?</h2>
+<p>Based on the table from the last question, there were 0 districts in 2024 that were considered Major Urban and had enrollment under 5000. There were 7 districts in 2025 that were considered Major Suburban and had enrollment under 5000. Let’s look at those 7.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(tea_description <span class="sc">==</span> <span class="st">"Major Suburban"</span> <span class="sc">&amp;</span> end_year <span class="sc">==</span> <span class="dv">2024</span> <span class="sc">&amp;</span> total_enrollment <span class="sc">&lt;</span> <span class="dv">5000</span>) <span class="co"># add select to simplify</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["region"],"name":[1],"type":["chr"],"align":["left"]},{"label":["county"],"name":[2],"type":["chr"],"align":["left"]},{"label":["district_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["district_number"],"name":[4],"type":["chr"],"align":["left"]},{"label":["total_enrollment"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["average_base_pay"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["school_year"],"name":[7],"type":["chr"],"align":["left"]},{"label":["end_year"],"name":[8],"type":["chr"],"align":["left"]},{"label":["tea_description"],"name":[9],"type":["chr"],"align":["left"]},{"label":["nces_description"],"name":[10],"type":["chr"],"align":["left"]},{"label":["alice_threshold_hh_under_65"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["difference"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["bill_category"],"name":[13],"type":["fct"],"align":["left"]},{"label":["above_alice"],"name":[14],"type":["lgl"],"align":["right"]}],"data":[{"1":"20","2":"BEXAR COUNTY","3":"ALAMO HEIGHTS ISD","4":"015901","5":"4698","6":"62578","7":"2023-2024","8":"2024","9":"Major Suburban","10":"City-Large","11":"61824.18","12":"754","13":"under 5000","14":"TRUE"},{"1":"19","2":"EL PASO COUNTY","3":"SAN ELIZARIO ISD","4":"071904","5":"3009","6":"73946","7":"2023-2024","8":"2024","9":"Major Suburban","10":"Suburb-Large","11":"59409.95","12":"14536","13":"under 5000","14":"TRUE"},{"1":"11","2":"JOHNSON COUNTY","3":"GODLEY ISD","4":"126911","5":"3002","6":"59565","7":"2023-2024","8":"2024","9":"Major Suburban","10":"Rural-Distant","11":"69812.88","12":"-10248","13":"under 5000","14":"FALSE"},{"1":"11","2":"TARRANT COUNTY","3":"CASTLEBERRY ISD","4":"220917","5":"3740","6":"66052","7":"2023-2024","8":"2024","9":"Major Suburban","10":"Suburb-Large","11":"65679.97","12":"372","13":"under 5000","14":"TRUE"},{"1":"11","2":"TARRANT COUNTY","3":"KENNEDALE ISD","4":"220914","5":"2827","6":"65415","7":"2023-2024","8":"2024","9":"Major Suburban","10":"Suburb-Large","11":"65679.97","12":"-265","13":"under 5000","14":"FALSE"},{"1":"11","2":"TARRANT COUNTY","3":"LAKE WORTH ISD","4":"220910","5":"3238","6":"65466","7":"2023-2024","8":"2024","9":"Major Suburban","10":"Suburb-Large","11":"65679.97","12":"-214","13":"under 5000","14":"FALSE"},{"1":"13","2":"TRAVIS COUNTY","3":"UNIVERSITY OF TEXAS AT AUSTIN H S","4":"227506","5":"788","6":"68949","7":"2023-2024","8":"2024","9":"Major Suburban","10":"City-Large","11":"66192.25","12":"2757","13":"under 1600","14":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>Of these 7 districts, 3 had an average salary that did not meet the ALICE cost of living threshold.</p>
+</section>
+<section id="what-number-of-districts-in-texas-pay-their-teachers-under-living-wage-whats-that-in-a-percentage" class="level2">
+<h2 class="anchored" data-anchor-id="what-number-of-districts-in-texas-pay-their-teachers-under-living-wage-whats-that-in-a-percentage">What number of districts in Texas pay their teachers under living wage? What’s that in a percentage?</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span> <span class="sc">&amp;</span> above_alice <span class="sc">==</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">total_districts_in_Texas_under_alice_threshold =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["total_districts_in_Texas_under_alice_threshold"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"463"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>In 2024, 463 districts in Texas on average paid their teachers under a living wage.</p>
+<p>Now, the percentage.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">ungroup</span>() <span class="sc">|&gt;</span>  <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>( <span class="at">under_alice =</span> <span class="fu">sum</span>(above_alice <span class="sc">==</span> F),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">total_districts =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percent_districts_under_alice_threshold =</span> ((under_alice <span class="sc">/</span> total_districts)<span class="sc">*</span><span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="fu">round_half_up</span>(<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["under_alice"],"name":[1],"type":["int"],"align":["right"]},{"label":["total_districts"],"name":[2],"type":["int"],"align":["right"]},{"label":["percent_districts_under_alice_threshold"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"463","2":"1020","3":"45.4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>In 2024, 45.4% of districts in Texas on average paid their teachers under a living wage.</p>
+</section>
+<section id="what-percentage-of-students-are-served-by-teachers-that-are-underpaid" class="level2">
+<h2 class="anchored" data-anchor-id="what-percentage-of-students-are-served-by-teachers-that-are-underpaid">What percentage of students are served by teachers that are underpaid?</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span> ) <span class="sc">|&gt;</span> <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">total_students_served_by_underpaid_teachers =</span> <span class="fu">sum</span>(total_enrollment[above_alice <span class="sc">==</span> F]),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">total_students =</span> <span class="fu">sum</span>(total_enrollment)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> <span class="fu">mutate</span>(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">percent_students_served_by_underpaid_teachers =</span> (total_students_served_by_underpaid_teachers <span class="sc">/</span> total_students <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="fu">round_half_up</span>(<span class="dv">2</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="co">#|&gt; select(percent_students_served_by_underpaid_teachers)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["total_students_served_by_underpaid_teachers"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["total_students"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["percent_students_served_by_underpaid_teachers"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1641848","2":"5270736","3":"31.15"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>In 2024, 31.15% of students were served by teachers who were on average paid under a living wage.</p>
+</section>
+<section id="are-there-more-districts-being-helped-in-the-tea-rural-definition-or-the-bills-enrollment-breakdown" class="level2">
+<h2 class="anchored" data-anchor-id="are-there-more-districts-being-helped-in-the-tea-rural-definition-or-the-bills-enrollment-breakdown">Are there more districts being helped in the TEA “Rural” definition or the bill’s enrollment breakdown?</h2>
+<p>Districts being helped by TEA “Rural” description</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span> <span class="sc">&amp;</span> tea_description <span class="sc">==</span> <span class="st">"Rural"</span>) <span class="sc">|&gt;</span> <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"total_districts_TEA_rural"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["total_districts_TEA_rural"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"464"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>464 districts would get money if the bill targeted TEA’s “Rural” districts based on 2022-2023 TEA district types.</p>
+<p>Distircts being helped based on bill categories of enrollment.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Expand this to see code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>above_below_alice <span class="sc">|&gt;</span> <span class="fu">filter</span>(end_year <span class="sc">==</span> <span class="dv">2024</span> <span class="sc">&amp;</span> (bill_category <span class="sc">==</span> <span class="st">"under 300"</span> <span class="sc">|</span> bill_category <span class="sc">==</span> <span class="st">"under 1600"</span> <span class="sc">|</span> bill_category <span class="sc">==</span> <span class="st">"under 5000"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(bill_category) <span class="sc">|&gt;</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(<span class="at">name =</span> <span class="st">"total_districts"</span>) <span class="sc">|&gt;</span> <span class="fu">adorn_totals</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["bill_category"],"name":[1],"type":["fct"],"align":["left"]},{"label":["total_districts"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"under 300","2":"206"},{"1":"under 1600","2":"425"},{"1":"under 5000","2":"196"},{"1":"Total","2":"827"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>827 total districts would get money with the bill targeting districts under 5000, under 1600 and under 300 enrollment based on 2023-2024 enrollment.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

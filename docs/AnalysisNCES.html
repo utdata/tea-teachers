@@ -100,6 +100,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -171,38 +173,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Map1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">TEA District Types Map</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Map2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Bill Categories Map</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Map3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Difference in Salary and Cost of Living Map</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./AnalysisRegion20.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Region 20 Analysis</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
   <a href="./AnalysisNCES.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">NCES District Type Analysis</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./AnalysisForCamille.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Analysis For Camille</span></a>
+  <a href="./AnalysisSecondary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Secondary Analysis</span></a>
   </div>
 </li>
     </ul>
@@ -268,60 +246,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="count-and-average-pay-for-nces">Count and Average Pay for NCES</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>teaching_staff_totals <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description) <span class="sc">|&gt;</span> <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 13 × 2
-# Groups:   nces_description [13]
-   nces_description     n
-   &lt;chr&gt;            &lt;int&gt;
- 1 City-Large         305
- 2 City-Midsize       166
- 3 City-Small         200
- 4 Rural-Distant     2780
- 5 Rural-Fringe      1087
- 6 Rural-Remote      1985
- 7 Suburb-Large       672
- 8 Suburb-Midsize     226
- 9 Suburb-Small        46
-10 Town-Distant       859
-11 Town-Fringe        291
-12 Town-Remote        681
-13 &lt;NA&gt;                24</code></pre>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["nces_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"City-Large","2":"305"},{"1":"City-Midsize","2":"166"},{"1":"City-Small","2":"200"},{"1":"Rural-Distant","2":"2780"},{"1":"Rural-Fringe","2":"1087"},{"1":"Rural-Remote","2":"1985"},{"1":"Suburb-Large","2":"672"},{"1":"Suburb-Midsize","2":"226"},{"1":"Suburb-Small","2":"46"},{"1":"Town-Distant","2":"859"},{"1":"Town-Fringe","2":"291"},{"1":"Town-Remote","2":"681"},{"1":"NA","2":"24"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Finding average pay per school year for each NCES district type.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>district_types_nces_chart <span class="ot">&lt;-</span> teaching_staff_totals <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description, school_year) <span class="sc">|&gt;</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_pay =</span> <span class="fu">mean</span>(average_base_pay))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>district_types_nces_chart <span class="ot">&lt;-</span> teaching_staff_totals <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description, school_year) <span class="sc">|&gt;</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_pay =</span> <span class="fu">mean</span>(average_base_pay))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'nces_description'. You can override using
 the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>district_types_nces_chart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 127 × 3
-# Groups:   nces_description [13]
-   nces_description school_year avg_pay
-   &lt;chr&gt;            &lt;chr&gt;         &lt;dbl&gt;
- 1 City-Large       2014-2015    52463.
- 2 City-Large       2015-2016    53582.
- 3 City-Large       2016-2017    54324.
- 4 City-Large       2017-2018    55315.
- 5 City-Large       2018-2019    55907.
- 6 City-Large       2019-2020    58484.
- 7 City-Large       2020-2021    58959.
- 8 City-Large       2021-2022    60901.
- 9 City-Large       2022-2023    61563.
-10 City-Large       2023-2024    63822.
-# ℹ 117 more rows</code></pre>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>district_types_nces_chart</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["nces_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["school_year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["avg_pay"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"City-Large","2":"2014-2015","3":"52462.79"},{"1":"City-Large","2":"2015-2016","3":"53581.94"},{"1":"City-Large","2":"2016-2017","3":"54323.88"},{"1":"City-Large","2":"2017-2018","3":"55314.76"},{"1":"City-Large","2":"2018-2019","3":"55907.12"},{"1":"City-Large","2":"2019-2020","3":"58483.94"},{"1":"City-Large","2":"2020-2021","3":"58959.12"},{"1":"City-Large","2":"2021-2022","3":"60900.75"},{"1":"City-Large","2":"2022-2023","3":"61562.94"},{"1":"City-Large","2":"2023-2024","3":"63821.97"},{"1":"City-Midsize","2":"2014-2015","3":"49506.00"},{"1":"City-Midsize","2":"2015-2016","3":"50348.33"},{"1":"City-Midsize","2":"2016-2017","3":"51168.06"},{"1":"City-Midsize","2":"2017-2018","3":"51606.11"},{"1":"City-Midsize","2":"2018-2019","3":"54836.28"},{"1":"City-Midsize","2":"2019-2020","3":"55759.83"},{"1":"City-Midsize","2":"2020-2021","3":"56587.83"},{"1":"City-Midsize","2":"2021-2022","3":"57319.25"},{"1":"City-Midsize","2":"2022-2023","3":"59231.17"},{"1":"City-Midsize","2":"2023-2024","3":"60259.11"},{"1":"City-Small","2":"2014-2015","3":"48125.36"},{"1":"City-Small","2":"2015-2016","3":"48682.41"},{"1":"City-Small","2":"2016-2017","3":"49030.00"},{"1":"City-Small","2":"2017-2018","3":"49869.59"},{"1":"City-Small","2":"2018-2019","3":"50331.55"},{"1":"City-Small","2":"2019-2020","3":"54103.68"},{"1":"City-Small","2":"2020-2021","3":"54520.55"},{"1":"City-Small","2":"2021-2022","3":"54408.50"},{"1":"City-Small","2":"2022-2023","3":"56717.95"},{"1":"City-Small","2":"2023-2024","3":"57903.73"},{"1":"Rural-Distant","2":"2014-2015","3":"43657.44"},{"1":"Rural-Distant","2":"2015-2016","3":"44435.73"},{"1":"Rural-Distant","2":"2016-2017","3":"44842.96"},{"1":"Rural-Distant","2":"2017-2018","3":"45476.67"},{"1":"Rural-Distant","2":"2018-2019","3":"46213.59"},{"1":"Rural-Distant","2":"2019-2020","3":"50982.95"},{"1":"Rural-Distant","2":"2020-2021","3":"51297.65"},{"1":"Rural-Distant","2":"2021-2022","3":"51866.00"},{"1":"Rural-Distant","2":"2022-2023","3":"54102.61"},{"1":"Rural-Distant","2":"2023-2024","3":"55626.25"},{"1":"Rural-Fringe","2":"2014-2015","3":"47309.39"},{"1":"Rural-Fringe","2":"2015-2016","3":"48539.67"},{"1":"Rural-Fringe","2":"2016-2017","3":"48920.38"},{"1":"Rural-Fringe","2":"2017-2018","3":"49599.08"},{"1":"Rural-Fringe","2":"2018-2019","3":"50511.15"},{"1":"Rural-Fringe","2":"2019-2020","3":"53956.39"},{"1":"Rural-Fringe","2":"2020-2021","3":"54522.66"},{"1":"Rural-Fringe","2":"2021-2022","3":"56758.41"},{"1":"Rural-Fringe","2":"2022-2023","3":"57469.72"},{"1":"Rural-Fringe","2":"2023-2024","3":"59285.81"},{"1":"Rural-Remote","2":"2014-2015","3":"43619.53"},{"1":"Rural-Remote","2":"2015-2016","3":"44408.04"},{"1":"Rural-Remote","2":"2016-2017","3":"44825.22"},{"1":"Rural-Remote","2":"2017-2018","3":"45376.33"},{"1":"Rural-Remote","2":"2018-2019","3":"46137.55"},{"1":"Rural-Remote","2":"2019-2020","3":"51353.49"},{"1":"Rural-Remote","2":"2020-2021","3":"51708.68"},{"1":"Rural-Remote","2":"2021-2022","3":"53840.43"},{"1":"Rural-Remote","2":"2022-2023","3":"53496.38"},{"1":"Rural-Remote","2":"2023-2024","3":"54948.37"},{"1":"Suburb-Large","2":"2014-2015","3":"52364.31"},{"1":"Suburb-Large","2":"2015-2016","3":"53591.65"},{"1":"Suburb-Large","2":"2016-2017","3":"54498.38"},{"1":"Suburb-Large","2":"2017-2018","3":"55380.47"},{"1":"Suburb-Large","2":"2018-2019","3":"56274.93"},{"1":"Suburb-Large","2":"2019-2020","3":"59664.77"},{"1":"Suburb-Large","2":"2020-2021","3":"59728.05"},{"1":"Suburb-Large","2":"2021-2022","3":"61259.17"},{"1":"Suburb-Large","2":"2022-2023","3":"62567.78"},{"1":"Suburb-Large","2":"2023-2024","3":"64231.72"},{"1":"Suburb-Midsize","2":"2014-2015","3":"47284.32"},{"1":"Suburb-Midsize","2":"2015-2016","3":"48535.48"},{"1":"Suburb-Midsize","2":"2016-2017","3":"49203.32"},{"1":"Suburb-Midsize","2":"2017-2018","3":"49902.20"},{"1":"Suburb-Midsize","2":"2018-2019","3":"50866.92"},{"1":"Suburb-Midsize","2":"2019-2020","3":"54004.72"},{"1":"Suburb-Midsize","2":"2020-2021","3":"54756.76"},{"1":"Suburb-Midsize","2":"2021-2022","3":"52280.00"},{"1":"Suburb-Midsize","2":"2022-2023","3":"57542.48"},{"1":"Suburb-Midsize","2":"2023-2024","3":"58681.44"},{"1":"Suburb-Small","2":"2014-2015","3":"46766.40"},{"1":"Suburb-Small","2":"2015-2016","3":"47479.20"},{"1":"Suburb-Small","2":"2016-2017","3":"48185.20"},{"1":"Suburb-Small","2":"2017-2018","3":"48986.60"},{"1":"Suburb-Small","2":"2018-2019","3":"49326.60"},{"1":"Suburb-Small","2":"2019-2020","3":"53730.00"},{"1":"Suburb-Small","2":"2020-2021","3":"53892.60"},{"1":"Suburb-Small","2":"2021-2022","3":"60828.00"},{"1":"Suburb-Small","2":"2022-2023","3":"55669.80"},{"1":"Suburb-Small","2":"2023-2024","3":"57687.80"},{"1":"Town-Distant","2":"2014-2015","3":"45581.22"},{"1":"Town-Distant","2":"2015-2016","3":"46175.52"},{"1":"Town-Distant","2":"2016-2017","3":"46907.11"},{"1":"Town-Distant","2":"2017-2018","3":"47491.01"},{"1":"Town-Distant","2":"2018-2019","3":"48190.94"},{"1":"Town-Distant","2":"2019-2020","3":"53793.74"},{"1":"Town-Distant","2":"2020-2021","3":"52519.21"},{"1":"Town-Distant","2":"2021-2022","3":"54524.08"},{"1":"Town-Distant","2":"2022-2023","3":"55097.62"},{"1":"Town-Distant","2":"2023-2024","3":"56817.48"},{"1":"Town-Fringe","2":"2014-2015","3":"46398.59"},{"1":"Town-Fringe","2":"2015-2016","3":"47141.25"},{"1":"Town-Fringe","2":"2016-2017","3":"48113.88"},{"1":"Town-Fringe","2":"2017-2018","3":"48596.09"},{"1":"Town-Fringe","2":"2018-2019","3":"49206.66"},{"1":"Town-Fringe","2":"2019-2020","3":"53018.59"},{"1":"Town-Fringe","2":"2020-2021","3":"53532.16"},{"1":"Town-Fringe","2":"2021-2022","3":"53732.67"},{"1":"Town-Fringe","2":"2022-2023","3":"56326.22"},{"1":"Town-Fringe","2":"2023-2024","3":"58129.78"},{"1":"Town-Remote","2":"2014-2015","3":"45551.39"},{"1":"Town-Remote","2":"2015-2016","3":"46141.96"},{"1":"Town-Remote","2":"2016-2017","3":"46425.68"},{"1":"Town-Remote","2":"2017-2018","3":"46907.15"},{"1":"Town-Remote","2":"2018-2019","3":"47430.97"},{"1":"Town-Remote","2":"2019-2020","3":"51300.05"},{"1":"Town-Remote","2":"2020-2021","3":"51680.96"},{"1":"Town-Remote","2":"2021-2022","3":"50915.83"},{"1":"Town-Remote","2":"2022-2023","3":"53689.47"},{"1":"Town-Remote","2":"2023-2024","3":"55521.36"},{"1":"NA","2":"2014-2015","3":"41692.00"},{"1":"NA","2":"2015-2016","3":"42544.60"},{"1":"NA","2":"2016-2017","3":"39585.00"},{"1":"NA","2":"2017-2018","3":"43263.00"},{"1":"NA","2":"2018-2019","3":"43102.67"},{"1":"NA","2":"2019-2020","3":"47432.50"},{"1":"NA","2":"2020-2021","3":"49937.00"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <p>Graphing it.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(district_types_nces_chart, <span class="fu">aes</span>(<span class="at">x =</span> school_year, <span class="at">y =</span> avg_pay, <span class="at">color =</span> nces_description, <span class="at">group =</span> nces_description)) <span class="sc">+</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(district_types_nces_chart, <span class="fu">aes</span>(<span class="at">x =</span> school_year, <span class="at">y =</span> avg_pay, <span class="at">color =</span> nces_description, <span class="at">group =</span> nces_description)) <span class="sc">+</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">color =</span> <span class="fu">guide_legend</span>(<span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">byrow =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -334,61 +290,40 @@ the `.groups` argument.</code></pre>
 <section id="average-and-median-of-difference-between-salary-and-alice-for-each-nces-district-type" class="level3">
 <h3 class="anchored" data-anchor-id="average-and-median-of-difference-between-salary-and-alice-for-each-nces-district-type">Average and Median of difference between salary and ALICE for each NCES district type</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>salary_col_comparison <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description) <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_difference =</span> <span class="fu">mean</span>(difference),</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_difference =</span> <span class="fu">median</span>(difference),</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">number_of_districts =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(avg_difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 13 × 4
-   nces_description avg_difference median_difference number_of_districts
-   &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;               &lt;int&gt;
- 1 Town-Fringe             -3887.             -2854                  291
- 2 &lt;NA&gt;                    -3055.             -2348                   24
- 3 Rural-Distant           -2597.             -2000.                2780
- 4 Rural-Fringe            -2192.             -1501                 1087
- 5 Town-Distant            -1356.              -970                  859
- 6 Rural-Remote               68.7               38                 1985
- 7 Town-Remote                84.5              825                  681
- 8 Suburb-Large              257.               844                  672
- 9 City-Small                566.               914                  200
-10 Suburb-Midsize            695.               646                  226
-11 Suburb-Small             1306.              1204                   46
-12 City-Large               1851.              1823                  305
-13 City-Midsize             1948.              2263                  166</code></pre>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>salary_col_comparison <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description) <span class="sc">|&gt;</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_difference =</span> <span class="fu">mean</span>(difference),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_difference =</span> <span class="fu">median</span>(difference),</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">number_of_districts =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(avg_difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["nces_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["avg_difference"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["median_difference"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["number_of_districts"],"name":[4],"type":["int"],"align":["right"]}],"data":[{"1":"Town-Fringe","2":"-3886.94502","3":"-2854.0","4":"291"},{"1":"NA","2":"-3054.79167","3":"-2348.0","4":"24"},{"1":"Rural-Distant","2":"-2597.15863","3":"-2000.5","4":"2780"},{"1":"Rural-Fringe","2":"-2191.53726","3":"-1501.0","4":"1087"},{"1":"Town-Distant","2":"-1355.97905","3":"-970.0","4":"859"},{"1":"Rural-Remote","2":"68.70227","3":"38.0","4":"1985"},{"1":"Town-Remote","2":"84.49780","3":"825.0","4":"681"},{"1":"Suburb-Large","2":"257.08036","3":"844.0","4":"672"},{"1":"City-Small","2":"566.42000","3":"914.0","4":"200"},{"1":"Suburb-Midsize","2":"694.59735","3":"646.0","4":"226"},{"1":"Suburb-Small","2":"1306.13043","3":"1204.0","4":"46"},{"1":"City-Large","2":"1851.13770","3":"1823.0","4":"305"},{"1":"City-Midsize","2":"1947.77108","3":"2263.0","4":"166"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>avg_difference_over_time_nces <span class="ot">&lt;-</span> salary_col_comparison <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description, end_year) <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_difference =</span> <span class="fu">mean</span>(difference))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>avg_difference_over_time_nces <span class="ot">&lt;-</span> salary_col_comparison <span class="sc">|&gt;</span> <span class="fu">group_by</span>(nces_description, end_year) <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_difference =</span> <span class="fu">mean</span>(difference))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'nces_description'. You can override using
 the `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>avg_difference_over_time_nces</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 127 × 3
-# Groups:   nces_description [13]
-   nces_description end_year avg_difference
-   &lt;chr&gt;            &lt;chr&gt;             &lt;dbl&gt;
- 1 City-Large       2015              2311.
- 2 City-Large       2016              3430.
- 3 City-Large       2017              4172.
- 4 City-Large       2018               769.
- 5 City-Large       2019               453.
- 6 City-Large       2020              2896.
- 7 City-Large       2021               577.
- 8 City-Large       2022             -3714 
- 9 City-Large       2023               251.
-10 City-Large       2024              2510.
-# ℹ 117 more rows</code></pre>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>avg_difference_over_time_nces</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["nces_description"],"name":[1],"type":["chr"],"align":["left"]},{"label":["end_year"],"name":[2],"type":["chr"],"align":["left"]},{"label":["avg_difference"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"City-Large","2":"2015","3":"2311.27273"},{"1":"City-Large","2":"2016","3":"3430.42424"},{"1":"City-Large","2":"2017","3":"4172.36364"},{"1":"City-Large","2":"2018","3":"769.30303"},{"1":"City-Large","2":"2019","3":"452.57576"},{"1":"City-Large","2":"2020","3":"2895.70588"},{"1":"City-Large","2":"2021","3":"576.76471"},{"1":"City-Large","2":"2022","3":"-3714.00000"},{"1":"City-Large","2":"2023","3":"251.41176"},{"1":"City-Large","2":"2024","3":"2510.44118"},{"1":"City-Midsize","2":"2015","3":"1728.22222"},{"1":"City-Midsize","2":"2016","3":"2570.55556"},{"1":"City-Midsize","2":"2017","3":"3390.27778"},{"1":"City-Midsize","2":"2018","3":"-2282.77778"},{"1":"City-Midsize","2":"2019","3":"947.38889"},{"1":"City-Midsize","2":"2020","3":"1870.94444"},{"1":"City-Midsize","2":"2021","3":"4087.83333"},{"1":"City-Midsize","2":"2022","3":"-600.75000"},{"1":"City-Midsize","2":"2023","3":"2377.94444"},{"1":"City-Midsize","2":"2024","3":"3405.88889"},{"1":"City-Small","2":"2015","3":"625.36364"},{"1":"City-Small","2":"2016","3":"1182.40909"},{"1":"City-Small","2":"2017","3":"1530.00000"},{"1":"City-Small","2":"2018","3":"-2175.86364"},{"1":"City-Small","2":"2019","3":"-3077.54545"},{"1":"City-Small","2":"2020","3":"694.59091"},{"1":"City-Small","2":"2021","3":"2475.09091"},{"1":"City-Small","2":"2022","3":"359.00000"},{"1":"City-Small","2":"2023","3":"1338.40909"},{"1":"City-Small","2":"2024","3":"2524.18182"},{"1":"Rural-Distant","2":"2015","3":"-2066.24342"},{"1":"Rural-Distant","2":"2016","3":"-1287.95395"},{"1":"Rural-Distant","2":"2017","3":"-880.72697"},{"1":"Rural-Distant","2":"2018","3":"-4918.06250"},{"1":"Rural-Distant","2":"2019","3":"-5579.17763"},{"1":"Rural-Distant","2":"2020","3":"-809.81579"},{"1":"Rural-Distant","2":"2021","3":"-2337.21711"},{"1":"Rural-Distant","2":"2022","3":"-8673.63636"},{"1":"Rural-Distant","2":"2023","3":"-3069.69408"},{"1":"Rural-Distant","2":"2024","3":"-1546.04605"},{"1":"Rural-Fringe","2":"2015","3":"-1892.29412"},{"1":"Rural-Fringe","2":"2016","3":"-655.24576"},{"1":"Rural-Fringe","2":"2017","3":"-281.30252"},{"1":"Rural-Fringe","2":"2018","3":"-4434.52941"},{"1":"Rural-Fringe","2":"2019","3":"-4404.81513"},{"1":"Rural-Fringe","2":"2020","3":"-959.57983"},{"1":"Rural-Fringe","2":"2021","3":"-2200.02521"},{"1":"Rural-Fringe","2":"2022","3":"-7229.58824"},{"1":"Rural-Fringe","2":"2023","3":"-2989.74790"},{"1":"Rural-Fringe","2":"2024","3":"-1173.66387"},{"1":"Rural-Remote","2":"2015","3":"-417.16514"},{"1":"Rural-Remote","2":"2016","3":"371.33945"},{"1":"Rural-Remote","2":"2017","3":"788.52294"},{"1":"Rural-Remote","2":"2018","3":"-3041.10092"},{"1":"Rural-Remote","2":"2019","3":"-2417.49541"},{"1":"Rural-Remote","2":"2020","3":"2798.44495"},{"1":"Rural-Remote","2":"2021","3":"584.82569"},{"1":"Rural-Remote","2":"2022","3":"-4732.34783"},{"1":"Rural-Remote","2":"2023","3":"502.74312"},{"1":"Rural-Remote","2":"2024","3":"1954.73853"},{"1":"Suburb-Large","2":"2015","3":"742.68919"},{"1":"Suburb-Large","2":"2016","3":"1970.02703"},{"1":"Suburb-Large","2":"2017","3":"2876.75676"},{"1":"Suburb-Large","2":"2018","3":"-2389.79730"},{"1":"Suburb-Large","2":"2019","3":"-2711.55405"},{"1":"Suburb-Large","2":"2020","3":"678.28378"},{"1":"Suburb-Large","2":"2021","3":"268.59459"},{"1":"Suburb-Large","2":"2022","3":"-4433.83333"},{"1":"Suburb-Large","2":"2023","3":"-202.43243"},{"1":"Suburb-Large","2":"2024","3":"1461.50000"},{"1":"Suburb-Midsize","2":"2015","3":"284.32000"},{"1":"Suburb-Midsize","2":"2016","3":"1535.48000"},{"1":"Suburb-Midsize","2":"2017","3":"2203.32000"},{"1":"Suburb-Midsize","2":"2018","3":"-1497.80000"},{"1":"Suburb-Midsize","2":"2019","3":"-133.08000"},{"1":"Suburb-Midsize","2":"2020","3":"3004.72000"},{"1":"Suburb-Midsize","2":"2021","3":"1756.76000"},{"1":"Suburb-Midsize","2":"2022","3":"-5920.00000"},{"1":"Suburb-Midsize","2":"2023","3":"-888.36000"},{"1":"Suburb-Midsize","2":"2024","3":"250.60000"},{"1":"Suburb-Small","2":"2015","3":"766.40000"},{"1":"Suburb-Small","2":"2016","3":"1479.20000"},{"1":"Suburb-Small","2":"2017","3":"2185.20000"},{"1":"Suburb-Small","2":"2018","3":"-13.40000"},{"1":"Suburb-Small","2":"2019","3":"-673.40000"},{"1":"Suburb-Small","2":"2020","3":"3730.00000"},{"1":"Suburb-Small","2":"2021","3":"1892.60000"},{"1":"Suburb-Small","2":"2022","3":"-4415.00000"},{"1":"Suburb-Small","2":"2023","3":"757.40000"},{"1":"Suburb-Small","2":"2024","3":"2775.40000"},{"1":"Town-Distant","2":"2015","3":"-748.56383"},{"1":"Town-Distant","2":"2016","3":"-154.26596"},{"1":"Town-Distant","2":"2017","3":"577.31915"},{"1":"Town-Distant","2":"2018","3":"-3785.58511"},{"1":"Town-Distant","2":"2019","3":"-4628.21277"},{"1":"Town-Distant","2":"2020","3":"974.59574"},{"1":"Town-Distant","2":"2021","3":"-1151.00000"},{"1":"Town-Distant","2":"2022","3":"-4958.46154"},{"1":"Town-Distant","2":"2023","3":"-2254.87234"},{"1":"Town-Distant","2":"2024","3":"-535.01064"},{"1":"Town-Fringe","2":"2015","3":"-3132.65625"},{"1":"Town-Fringe","2":"2016","3":"-2390.00000"},{"1":"Town-Fringe","2":"2017","3":"-1417.37500"},{"1":"Town-Fringe","2":"2018","3":"-5935.15625"},{"1":"Town-Fringe","2":"2019","3":"-6262.09375"},{"1":"Town-Fringe","2":"2020","3":"-2450.15625"},{"1":"Town-Fringe","2":"2021","3":"-4436.59375"},{"1":"Town-Fringe","2":"2022","3":"-8206.66667"},{"1":"Town-Fringe","2":"2023","3":"-5178.53125"},{"1":"Town-Fringe","2":"2024","3":"-3374.96875"},{"1":"Town-Remote","2":"2015","3":"18.05333"},{"1":"Town-Remote","2":"2016","3":"608.62667"},{"1":"Town-Remote","2":"2017","3":"892.34667"},{"1":"Town-Remote","2":"2018","3":"-2892.85333"},{"1":"Town-Remote","2":"2019","3":"-3235.69333"},{"1":"Town-Remote","2":"2020","3":"633.38667"},{"1":"Town-Remote","2":"2021","3":"814.29333"},{"1":"Town-Remote","2":"2022","3":"-3731.83333"},{"1":"Town-Remote","2":"2023","3":"1197.86667"},{"1":"Town-Remote","2":"2024","3":"3029.76000"},{"1":"NA","2":"2015","3":"-3308.00000"},{"1":"NA","2":"2016","3":"-2455.40000"},{"1":"NA","2":"2017","3":"-4165.00000"},{"1":"NA","2":"2018","3":"-2987.00000"},{"1":"NA","2":"2019","3":"-3564.00000"},{"1":"NA","2":"2020","3":"-2567.50000"},{"1":"NA","2":"2021","3":"-63.00000"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(avg_difference_over_time_nces, </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> end_year, <span class="at">y =</span> avg_difference, <span class="at">color =</span> nces_description, <span class="at">group =</span> nces_description)) <span class="sc">+</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10000</span>,<span class="dv">5000</span>), <span class="at">n.breaks =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(avg_difference_over_time_nces, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> end_year, <span class="at">y =</span> avg_difference, <span class="at">color =</span> nces_description, <span class="at">group =</span> nces_description)) <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10000</span>,<span class="dv">5000</span>), <span class="at">n.breaks =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
